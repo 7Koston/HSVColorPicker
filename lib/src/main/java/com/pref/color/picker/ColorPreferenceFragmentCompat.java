@@ -21,7 +21,6 @@ public abstract class ColorPreferenceFragmentCompat extends PreferenceFragmentCo
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     mManager = getFragmentManager();
   }
 

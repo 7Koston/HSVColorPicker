@@ -1,16 +1,30 @@
 # Color Picker PreferenceX
-[ ![API](https://img.shields.io/badge/API-9%2B-blue.svg?style=flat) ](https://android-arsenal.com/api?level=14)
+[ ![API](https://img.shields.io/badge/API-14%2B-blue.svg?style=flat) ](https://android-arsenal.com/api?level=14)
+[![](https://jitpack.io/v/7Koston/pref-color-picker.svg)](https://jitpack.io/#7Koston/pref-color-picker)
 
 This is color picker for AndroidX Preference Library.</br>
-The original ColorPickerView was written by [Daniel Nilsson](https://github.com/danielnilsson9/color-picker-view)
-Rewritten for Support Lib by [u1aryz](https://github.com/u1aryz/ColorPickerPreferenceCompat)
+The original ColorPickerView was written by [Daniel Nilsson](https://github.com/danielnilsson9/color-picker-view). </br>
+Rewritten for Support Lib by [u1aryz](https://github.com/u1aryz/ColorPickerPreferenceCompat).
 
 
 ## Including in project
 
+Add it in your root build.gradle at the end of repositories:
+
+```gradle
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+    }
+   }
+```
+
+Add the dependency:
+
 ```gradle
 dependencies {
-
+  implementation 'com.github.7Koston:pref-color-picker:master-SNAPSHOT'
 }
 ```
 

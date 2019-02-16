@@ -20,11 +20,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
+            useProguard false
             zipAlignEnabled true
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
+            useProguard false
             zipAlignEnabled true
         }
     }

@@ -8,3 +8,5 @@
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
 -verbose
+
+-keep com.pref.color.picker.**

@@ -1,0 +1,42 @@
+<resources>
+
+  <style name="Base.Theme.DayNight" parent="Theme.MaterialComponents.Light.NoActionBar"/>
+
+  <style name="AppTheme.Base" parent="Base.Theme.DayNight">
+    <!--BASE-->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:fitsSystemWindows">true</item>
+    <item name="preferenceTheme">@style/Preference.Theme</item>
+  </style>
+
+  <style name="Preference.Theme" parent="@style/PreferenceThemeOverlay">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="dialogPreferenceStyle">@style/AppTheme.Dialog</item>
+    <item name="android:dialogPreferenceStyle">@style/AppTheme.Dialog</item>
+  </style>
+
+  <style name="AppTheme.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="android:headerDividersEnabled">false</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowBackground">@color/colorAccent</item>
+    <item name="android:background">@color/colorAccent</item>
+  </style>
+
+  <style name="AppTheme.AlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="buttonBarButtonStyle">@style/ButtonBarButtonStyle</item>
+  </style>
+
+  <style name="ButtonBarButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textColor">@color/colorAccent</item>
+  </style>
+
+</resources>

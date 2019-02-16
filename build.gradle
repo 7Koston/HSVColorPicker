@@ -1,0 +1,40 @@
+buildscript {
+
+    ext.buildConfig = [
+            compileSdk  : 28,
+            targetSdk   : 28,
+            minSdk      : 14,
+            gradlePlugin: '3.3.1'
+    ]
+    ext.versions = [
+            appcompat : '1.1.0-alpha02',
+            preference: '1.1.0-alpha03'
+    ]
+    ext.deps = [
+            'androidx': [
+                    'appcompat' : "androidx.appcompat:appcompat:${versions.appcompat}",
+                    'preference': "androidx.preference:preference:${versions.preference}"
+            ]
+    ]
+
+    repositories {
+        google()
+        jcenter()
+
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:${buildConfig.gradlePlugin}"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

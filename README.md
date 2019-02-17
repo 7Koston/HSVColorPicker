@@ -38,11 +38,9 @@ Add the `ColorPreference` to your preference xml.
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <com.pref.color.picker.ColorPreference
-      android:defaultValue="0xFF4183C4"
+      android:defaultValue="@color/yourColor"
       android:key="color1"
-      android:persistent="false"
-      android:title="Color 1"
-      app:alphaSlider="true" />
+      android:title="Color 1"/>
   ...
 
 </androidx.preference.PreferenceScreen>

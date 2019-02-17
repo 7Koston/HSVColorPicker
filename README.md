@@ -28,7 +28,7 @@ Add the dependency:
 
 ```gradle
 dependencies {
-  implementation 'com.github.7Koston:pref-color-picker:master-SNAPSHOT'
+  implementation 'com.github.7Koston:pref-color-picker:1.0.0'
 }
 ```
 

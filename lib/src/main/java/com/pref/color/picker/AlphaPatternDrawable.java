@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * This drawable will draw a simple white and gray chessboard pattern.
- * It's pattern you will often see as a background behind a
- * partly transparent image in many applications.
+ * This drawable will draw a simple white and gray chessboard pattern. It's pattern you will often
+ * see as a background behind a partly transparent image in many applications.
  *
  * @author Daniel Nilsson
  * @author u1aryz
@@ -27,10 +26,9 @@ public class AlphaPatternDrawable extends Drawable {
   private final Paint mPaintGray = new Paint();
 
   /**
-   * Bitmap in which the pattern will be cached.
-   * This is so the pattern will not have to be recreated each time draw() gets called.
-   * Because recreating the pattern i rather expensive. I will only be recreated if the
-   * size changes.
+   * Bitmap in which the pattern will be cached. This is so the pattern will not have to be
+   * recreated each time draw() gets called. Because recreating the pattern i rather expensive. I
+   * will only be recreated if the size changes.
    */
   private Bitmap mBitmap;
 
@@ -40,25 +38,30 @@ public class AlphaPatternDrawable extends Drawable {
     mPaintGray.setColor(0xffcbcbcb);
   }
 
-  @Override public void draw(@NonNull Canvas canvas) {
+  @Override
+  public void draw(@NonNull Canvas canvas) {
     if (mBitmap != null && !mBitmap.isRecycled()) {
       canvas.drawBitmap(mBitmap, null, getBounds(), mPaint);
     }
   }
 
-  @Override public void setAlpha(int alpha) {
+  @Override
+  public void setAlpha(int alpha) {
     throw new UnsupportedOperationException("Alpha is not supported by this drawable.");
   }
 
-  @Override public void setColorFilter(@Nullable ColorFilter colorFilter) {
+  @Override
+  public void setColorFilter(@Nullable ColorFilter colorFilter) {
     throw new UnsupportedOperationException("ColorFilter is not supported by this drawable.");
   }
 
-  @Override public int getOpacity() {
+  @Override
+  public int getOpacity() {
     return PixelFormat.UNKNOWN;
   }
 
-  @Override protected void onBoundsChange(Rect bounds) {
+  @Override
+  protected void onBoundsChange(Rect bounds) {
     super.onBoundsChange(bounds);
 
     float height = bounds.height();
@@ -71,11 +74,9 @@ public class AlphaPatternDrawable extends Drawable {
   }
 
   /**
-   * This will generate a bitmap with the pattern
-   * as big as the rectangle we were allow to draw on.
-   * We do this to cache the bitmap so we don't need to
-   * recreate it each time draw() is called since it
-   * takes a few milliseconds.
+   * This will generate a bitmap with the pattern as big as the rectangle we were allow to draw on.
+   * We do this to cache the bitmap so we don't need to recreate it each time draw() is called since
+   * it takes a few milliseconds.
    */
   private void generatePatternBitmap(int numRectanglesHorizontal, int numRectanglesVertical) {
 

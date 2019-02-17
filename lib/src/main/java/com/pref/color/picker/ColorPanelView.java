@@ -13,9 +13,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 /**
- * This drawable will draw a simple white and gray chessboard pattern.
- * It's pattern you will often see as a background behind a
- * partly transparent image in many applications.
+ * This drawable will draw a simple white and gray chessboard pattern. It's pattern you will often
+ * see as a background behind a partly transparent image in many applications.
  *
  * @author Daniel Nilsson
  * @author u1aryz
@@ -24,12 +23,11 @@ import androidx.annotation.Nullable;
 public class ColorPanelView extends View {
 
   /**
-   * The width in pixels of the border
-   * surrounding the color panel.
+   * The width in pixels of the border surrounding the color panel.
    */
-  private final static int BORDER_WIDTH_PX = 1;
+  private static final int BORDER_WIDTH_PX = 1;
 
-  private final static int DEFAULT_BORDER_COLOR = 0xFF6E6E6E;
+  private static final int DEFAULT_BORDER_COLOR = 0xFF6E6E6E;
 
   private int mBorderColor = DEFAULT_BORDER_COLOR;
   private int mColor = 0xff000000;
@@ -55,14 +53,16 @@ public class ColorPanelView extends View {
     init(context, attrs);
   }
 
-  @Override public Parcelable onSaveInstanceState() {
+  @Override
+  public Parcelable onSaveInstanceState() {
     Bundle state = new Bundle();
     state.putParcelable("instanceState", super.onSaveInstanceState());
     state.putInt("color", mColor);
     return state;
   }
 
-  @Override public void onRestoreInstanceState(Parcelable state) {
+  @Override
+  public void onRestoreInstanceState(Parcelable state) {
     if (state instanceof Bundle) {
       Bundle bundle = (Bundle) state;
       mColor = bundle.getInt("color");
@@ -91,7 +91,7 @@ public class ColorPanelView extends View {
     // to theme changes automatically.
     final TypedValue value = new TypedValue();
     TypedArray a =
-        context.obtainStyledAttributes(value.data, new int[] { android.R.attr.textColorSecondary });
+        context.obtainStyledAttributes(value.data, new int[]{android.R.attr.textColorSecondary});
 
     try {
       if (mBorderColor == DEFAULT_BORDER_COLOR) {
@@ -102,7 +102,8 @@ public class ColorPanelView extends View {
     }
   }
 
-  @Override protected void onDraw(Canvas canvas) {
+  @Override
+  protected void onDraw(Canvas canvas) {
     final Rect rect = mColorRect;
 
     mBorderPaint.setColor(mBorderColor);
@@ -116,13 +117,15 @@ public class ColorPanelView extends View {
     canvas.drawRect(rect, mColorPaint);
   }
 
-  @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+  @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     int width = MeasureSpec.getSize(widthMeasureSpec);
     int height = MeasureSpec.getSize(heightMeasureSpec);
     setMeasuredDimension(width, height);
   }
 
-  @Override protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+  @Override
+  protected void onSizeChanged(int w, int h, int oldW, int oldH) {
     super.onSizeChanged(w, h, oldW, oldH);
 
     mDrawingRect = new Rect();
@@ -144,8 +147,18 @@ public class ColorPanelView extends View {
 
     mColorRect = new Rect(left, top, right, bottom);
     mAlphaPattern = new AlphaPatternDrawable(Util.dpToPx(getContext(), 5));
-    mAlphaPattern.setBounds(Math.round(mColorRect.left), Math.round(mColorRect.top),
-        Math.round(mColorRect.right), Math.round(mColorRect.bottom));
+    mAlphaPattern.setBounds(
+        Math.round(mColorRect.left),
+        Math.round(mColorRect.top),
+        Math.round(mColorRect.right),
+        Math.round(mColorRect.bottom));
+  }
+
+  /**
+   * Get the color currently show by this view.
+   */
+  public int getColor() {
+    return mColor;
   }
 
   /**
@@ -157,10 +170,10 @@ public class ColorPanelView extends View {
   }
 
   /**
-   * Get the color currently show by this view.
+   * Get the color of the border surrounding the panel.
    */
-  public int getColor() {
-    return mColor;
+  public int getBorderColor() {
+    return mBorderColor;
   }
 
   /**
@@ -169,12 +182,5 @@ public class ColorPanelView extends View {
   public void setBorderColor(int color) {
     mBorderColor = color;
     invalidate();
-  }
-
-  /**
-   * Get the color of the border surrounding the panel.
-   */
-  public int getBorderColor() {
-    return mBorderColor;
   }
 }

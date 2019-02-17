@@ -10,8 +10,7 @@
     android:id="@+id/color_picker"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:padding="16dp"/>
+    android:layout_weight="1"/>
 
   <RelativeLayout
     android:layout_width="wrap_content"
@@ -28,6 +27,7 @@
       android:layout_toEndOf="@+id/hash"
       android:layout_toRightOf="@+id/hash"
       android:autofillHints="@+id/edit_hex"
+      android:background="@null"
       android:digits="0123456789ABCDEFabcdef"
       android:hint="@string/hex"
       android:imeOptions="actionGo"
@@ -35,6 +35,8 @@
       android:labelFor="@+id/edit_hex"
       android:maxLength="8"
       android:maxLines="1"
+      android:textColor="?android:attr/textColorPrimary"
+      android:textSize="18sp"
       tools:ignore="UnusedAttribute"/>
 
     <TextView
@@ -45,6 +47,8 @@
       android:layout_alignTop="@+id/edit_hex"
       android:gravity="center_vertical"
       android:text="#"
+      android:textColor="?android:attr/textColorPrimary"
+      android:textSize="18sp"
       tools:ignore="HardcodedText"/>
 
     <com.pref.color.picker.ColorPanelView

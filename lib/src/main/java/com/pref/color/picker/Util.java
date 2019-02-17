@@ -4,18 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
 
-public class Util {
+class Util {
 
   private Util() {
     // No instances.
   }
 
-  public static int dpToPx(Context context, int dp) {
+  static int dpToPx(Context context, int dp) {
     DisplayMetrics metrics = context.getResources().getDisplayMetrics();
     return (int) (dp * metrics.density);
   }
 
-  public static int convertToColorInt(String argb) {
+  static int convertToColorInt(String argb) {
 
     if (argb.startsWith("#")) {
       argb = argb.substring(1);

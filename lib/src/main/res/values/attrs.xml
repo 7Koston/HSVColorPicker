@@ -12,8 +12,4 @@
     <attr name="borderColor"/>
   </declare-styleable>
 
-  <declare-styleable name="ColorPreference">
-    <attr format="boolean|reference" name="alphaSlider"/>
-  </declare-styleable>
-
 </resources>

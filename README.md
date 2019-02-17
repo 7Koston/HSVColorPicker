@@ -6,6 +6,8 @@ This is color picker for AndroidX Preference Library.</br>
 The original ColorPickerView was written by [Daniel Nilsson](https://github.com/danielnilsson9/color-picker-view). </br>
 Rewritten for Support Lib by [u1aryz](https://github.com/u1aryz/ColorPickerPreferenceCompat).
 
+![alt text](https://github.com/7Koston/pref-color-picker/tree/master/screenshots/1.png)
+![alt text](https://github.com/7Koston/pref-color-picker/tree/master/screenshots/2.png)
 
 ## Including in project
 

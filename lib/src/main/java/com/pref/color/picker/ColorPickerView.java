@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
  * @author u1aryz
  * @author 7Koston
  */
+@SuppressWarnings("unused")
 public class ColorPickerView extends View {
 
   private static final int DEFAULT_BORDER_COLOR = 0xFF6E6E6E;
@@ -46,13 +47,9 @@ public class ColorPickerView extends View {
    */
   private static final int BORDER_WIDTH_PX = 1;
 
-  /**
-   * The width in px of the hue panel.
-   */
+  /** The width in px of the hue panel. */
   private int mHuePanelWidthPx;
-  /**
-   * The height in px of the alpha panel
-   */
+  /** The height in px of the alpha panel */
   private int mAlphaPanelHeightPx;
   /** The distance in px between the different color panels. */
   private int mPanelSpacingPx;
@@ -162,15 +159,13 @@ public class ColorPickerView extends View {
     if (attrs != null) {
       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerView);
 
-      try {
-        mShowAlphaPanel = a.getBoolean(R.styleable.ColorPickerView_alphaChannelVisible, false);
-        mAlphaSliderText = a.getString(R.styleable.ColorPickerView_alphaChannelText);
-        mSliderTrackerColor =
-            a.getColor(R.styleable.ColorPickerView_sliderColor, DEFAULT_SLIDER_COLOR);
-        mBorderColor = a.getColor(R.styleable.ColorPickerView_borderColor, DEFAULT_BORDER_COLOR);
-      } finally {
-        a.recycle();
-      }
+      mShowAlphaPanel = a.getBoolean(R.styleable.ColorPickerView_alphaChannelVisible, false);
+      mAlphaSliderText = a.getString(R.styleable.ColorPickerView_alphaChannelText);
+      mSliderTrackerColor =
+          a.getColor(R.styleable.ColorPickerView_sliderColor, DEFAULT_SLIDER_COLOR);
+      mBorderColor = a.getColor(R.styleable.ColorPickerView_borderColor, DEFAULT_BORDER_COLOR);
+
+      a.recycle();
 
       applyThemeColors(context);
     }
@@ -905,40 +900,30 @@ public class ColorPickerView extends View {
     }
   }
 
-  /**
-   * Get color of the tracker slider on the hue and alpha panel.
-   */
+  /** Get color of the tracker slider on the hue and alpha panel. */
   public int getSliderTrackerColor() {
     return mSliderTrackerColor;
   }
 
-  /**
-   * Set the color of the tracker slider on the hue and alpha panel.
-   */
+  /** Set the color of the tracker slider on the hue and alpha panel. */
   public void setSliderTrackerColor(int color) {
     mSliderTrackerColor = color;
     mHueAlphaTrackerPaint.setColor(mSliderTrackerColor);
     invalidate();
   }
 
-  /**
-   * Get the color of the border surrounding all panels.
-   */
+  /** Get the color of the border surrounding all panels. */
   public int getBorderColor() {
     return mBorderColor;
   }
 
-  /**
-   * Set the color of the border surrounding all panels.
-   */
+  /** Set the color of the border surrounding all panels. */
   public void setBorderColor(int color) {
     mBorderColor = color;
     invalidate();
   }
 
-  /**
-   * Get the current value of the text that will be shown in the alpha slider.
-   */
+  /** Get the current value of the text that will be shown in the alpha slider. */
   public String getAlphaSliderText() {
     return mAlphaSliderText;
   }

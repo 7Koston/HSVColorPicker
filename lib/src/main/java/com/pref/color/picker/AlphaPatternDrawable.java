@@ -32,7 +32,7 @@ public class AlphaPatternDrawable extends Drawable {
    */
   private Bitmap mBitmap;
 
-  public AlphaPatternDrawable(int mRectangleSize) {
+  AlphaPatternDrawable(int mRectangleSize) {
     this.mRectangleSize = mRectangleSize;
     mPaintWhite.setColor(0xffffffff);
     mPaintGray.setColor(0xffcbcbcb);

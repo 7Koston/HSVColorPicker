@@ -2,12 +2,24 @@ package com.pref.color.picker;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
 import androidx.preference.DialogPreference;
+import androidx.preference.PreferenceViewHolder;
 
+@SuppressWarnings("unused")
 public class ColorPreference extends DialogPreference {
 
   private int mColor;
+  private Drawable mDrawable;
+
+  private boolean asIndicator, asIcon;
+
+  private ImageView ivIndicator;
 
   public ColorPreference(Context context) {
     super(context);
@@ -25,6 +37,21 @@ public class ColorPreference extends DialogPreference {
   }
 
   @Override
+  public void onBindViewHolder(PreferenceViewHolder holder) {
+    super.onBindViewHolder(holder);
+
+    ivIndicator = (ImageView) holder.findViewById(R.id.colorIndicator);
+
+    if (ivIndicator != null && asIndicator) {
+      ivIndicator.setVisibility(View.VISIBLE);
+      setColor(mColor);
+    }
+    if (ivIndicator != null && !asIndicator) {
+      ivIndicator.setVisibility(View.INVISIBLE);
+    }
+  }
+
+  @Override
   public int getDialogLayoutResource() {
     return R.layout.dialog_color_picker;
   }
@@ -35,7 +62,18 @@ public class ColorPreference extends DialogPreference {
   }
 
   private void init(Context context, AttributeSet attrs) {
-    setPersistent(true);
+    mDrawable = getContext().getResources().getDrawable(R.drawable.circle);
+
+    if (attrs != null) {
+      TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorPreference);
+
+      asIcon = a.getBoolean(R.styleable.ColorPreference_iconColorPreview, false);
+      asIndicator = a.getBoolean(R.styleable.ColorPreference_indicatorColorPreview, false);
+
+      a.recycle();
+    }
+
+    setWidgetLayoutResource(R.layout.preference_layout);
   }
 
   public int getColor() {
@@ -45,6 +83,18 @@ public class ColorPreference extends DialogPreference {
   public void setColor(int color) {
     mColor = color;
     persistInt(mColor);
+    setIndicatorColor();
+  }
+
+  private void setIndicatorColor() {
+    mDrawable.setColorFilter(new PorterDuffColorFilter(mColor, PorterDuff.Mode.SRC_IN));
+    if (asIcon) {
+      setIcon(mDrawable);
+    }
+    if (asIndicator && ivIndicator != null) {
+      ivIndicator.setImageDrawable(mDrawable);
+    }
+    notifyChanged();
   }
 
   @Override

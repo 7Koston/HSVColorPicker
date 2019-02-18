@@ -12,4 +12,9 @@
     <attr name="borderColor"/>
   </declare-styleable>
 
+  <declare-styleable name="ColorPreference">
+    <attr format="boolean|reference" name="iconColorPreview"/>
+    <attr format="boolean|reference" name="indicatorColorPreview"/>
+  </declare-styleable>
+
 </resources>

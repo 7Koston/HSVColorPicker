@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
  * @author u1aryz
  * @author 7Koston
  */
+@SuppressWarnings("unused")
 public class ColorPanelView extends View {
 
   /**

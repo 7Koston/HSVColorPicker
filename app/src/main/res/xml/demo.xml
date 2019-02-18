@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <com.pref.color.picker.ColorPreference
     style="@style/AppTheme.PreferenceDialog"
     android:defaultValue="@color/colorAccent"
     android:key="color_first"
     android:summary="Disable alpha"
-    android:title="Color 1"/>
+    android:title="Color 1"
+    app:iconColorPreview="true"
+    app:indicatorColorPreview="true"/>
 
   <androidx.preference.SwitchPreference
     android:defaultValue="false"

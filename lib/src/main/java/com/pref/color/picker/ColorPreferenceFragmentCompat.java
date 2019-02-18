@@ -1,17 +1,11 @@
 package com.pref.color.picker;
 
-import android.os.Bundle;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
 
 public abstract class ColorPreferenceFragmentCompat extends PreferenceFragmentCompat {
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
 
   @Override
   public void onDisplayPreferenceDialog(Preference preference) {

@@ -1,6 +1,4 @@
 <resources>
   <string name="app_name">ColorPicker</string>
-  <string name="ok">OK</string>
-  <string name="cancel">Cancel</string>
   <string name="hex">HEX</string>
 </resources>

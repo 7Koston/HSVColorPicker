@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceViewHolder;
@@ -16,9 +15,7 @@ public class ColorPreference extends DialogPreference {
 
   private int mColor;
   private Drawable mDrawable;
-
-  private boolean asIndicator, asIcon;
-
+  private boolean asIndicator;
   private ImageView ivIndicator;
 
   public ColorPreference(Context context) {
@@ -38,17 +35,9 @@ public class ColorPreference extends DialogPreference {
 
   @Override
   public void onBindViewHolder(PreferenceViewHolder holder) {
-    super.onBindViewHolder(holder);
-
     ivIndicator = (ImageView) holder.findViewById(R.id.colorIndicator);
-
-    if (ivIndicator != null && asIndicator) {
-      ivIndicator.setVisibility(View.VISIBLE);
-      setColor(mColor);
-    }
-    if (ivIndicator != null && !asIndicator) {
-      ivIndicator.setVisibility(View.INVISIBLE);
-    }
+    super.onBindViewHolder(holder);
+    setColor(mColor);
   }
 
   @Override
@@ -67,13 +56,12 @@ public class ColorPreference extends DialogPreference {
     if (attrs != null) {
       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorPreference);
 
-      asIcon = a.getBoolean(R.styleable.ColorPreference_iconColorPreview, false);
-      asIndicator = a.getBoolean(R.styleable.ColorPreference_indicatorColorPreview, false);
+      asIndicator = a.getBoolean(R.styleable.ColorPreference_indicatorColorPreview, true);
 
       a.recycle();
     }
 
-    setWidgetLayoutResource(R.layout.preference_layout);
+    setWidgetLayoutResource(R.layout.preference_indicator);
   }
 
   public int getColor() {
@@ -82,19 +70,15 @@ public class ColorPreference extends DialogPreference {
 
   public void setColor(int color) {
     mColor = color;
-    persistInt(mColor);
     setIndicatorColor();
+    persistInt(mColor);
   }
 
   private void setIndicatorColor() {
-    mDrawable.setColorFilter(new PorterDuffColorFilter(mColor, PorterDuff.Mode.SRC_IN));
-    if (asIcon) {
-      setIcon(mDrawable);
-    }
     if (asIndicator && ivIndicator != null) {
+      mDrawable.setColorFilter(new PorterDuffColorFilter(mColor, PorterDuff.Mode.SRC_IN));
       ivIndicator.setImageDrawable(mDrawable);
     }
-    notifyChanged();
   }
 
   @Override

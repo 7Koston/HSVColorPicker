@@ -2,7 +2,7 @@
 [ ![API](https://img.shields.io/badge/API-14%2B-blue.svg?style=flat) ](https://android-arsenal.com/api?level=14)
 [![](https://jitpack.io/v/7Koston/pref-color-picker.svg)](https://jitpack.io/#7Koston/pref-color-picker)
 
-This is color picker for AndroidX Preference Library.</br>
+This is color picker for AndroidX Preference Library rewritten by using `DialogPreference` and `PreferenceDialogFragmentCompat`.</br>
 The original ColorPickerView was written by [Daniel Nilsson](https://github.com/danielnilsson9/color-picker-view). </br>
 Rewritten for Support Lib by [u1aryz](https://github.com/u1aryz/ColorPickerPreferenceCompat).
 
@@ -42,9 +42,12 @@ Add the `ColorPreference` to your preference xml.
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <com.pref.color.picker.ColorPreference
-      android:defaultValue="@color/yourColor"
-      android:key="color1"
-      android:title="Color 1"/>
+      style="@style/AppTheme.PreferenceDialog"
+      android:defaultValue="@color/colorAccent"
+      android:key="color_first"
+      android:summary="Disable alpha"
+      android:title="Color 1"
+      app:indicatorColorPreview="true"/>
   ...
 
 </androidx.preference.PreferenceScreen>
@@ -59,6 +62,33 @@ public class MyPreferenceFragment extends ColorPreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.my_pref);
     }
 }
+```
+
+Customization:
+
+```xml
+  <style name="AppTheme.Base" parent="Base.Theme.DayNight">
+    <!--BASE-->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>
+  </style>
+  
+  <!-- Style for a DialogPreference Entry -->
+  <style name="AppTheme.PreferenceDialog" parent="Theme.AppCompat.DayNight.Dialog">
+    <item name="positiveButtonText">@android:string/ok</item>
+    <item name="negativeButtonText">@android:string/cancel</item>
+  </style>
+  
+  <style name="AppTheme.AlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+    <item name="buttonBarButtonStyle">@style/ButtonBarButtonStyle</item>
+  </style>
+  
+  <style name="ButtonBarButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textColor">@color/colorAccent</item>
+  </style>
 ```
 
 ## License

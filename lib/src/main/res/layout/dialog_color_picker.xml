@@ -1,88 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
 
-  <com.pref.color.picker.ColorPickerView
-    android:id="@+id/color_picker"
+  <com.pref.color.picker.v2.ColorPicker
+    android:id="@+id/picker"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginStart="4dp"
-    android:layout_marginEnd="4dp"
-    android:layout_alignParentTop="true"/>
+    android:layout_gravity="center"/>
 
-  <LinearLayout
+  <com.pref.color.picker.v2.SVBar
+    android:id="@+id/svbar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="6dp"
-    android:layout_marginLeft="6dp"
-    android:layout_alignLeft="@+id/color_picker"
-    android:layout_alignStart="@+id/color_picker"
-    android:layout_below="@+id/color_picker"
-    android:orientation="horizontal">
+    android:layout_margin="8dp"
+    android:layout_gravity="center"/>
 
-    <com.pref.color.picker.ColorPanelView
-      android:id="@+id/old_color_panel"
-      android:layout_width="60dp"
-      android:layout_height="40dp"
-      android:layout_gravity="center_vertical"/>
-
-    <ImageView
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:layout_margin="8dp"
-      android:layout_gravity="center_vertical"
-      android:contentDescription="@null"
-      app:srcCompat="@drawable/ic_arrow_right"/>
-
-    <com.pref.color.picker.ColorPanelView
-      android:id="@+id/new_color_panel"
-      android:layout_width="60dp"
-      android:layout_height="40dp"
-      android:layout_gravity="center_vertical"/>
-
-  </LinearLayout>
-
-  <LinearLayout
+  <com.pref.color.picker.v2.OpacityBar
+    android:id="@+id/opacitybar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_alignEnd="@+id/color_picker"
-    android:layout_alignRight="@+id/color_picker"
-    android:layout_below="@+id/color_picker"
-    android:orientation="horizontal">
+    android:layout_margin="8dp"
+    android:layout_gravity="center"/>
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:text="#"
-      android:textColor="?android:attr/textColorPrimary"
-      android:textSize="18sp"
-      tools:ignore="HardcodedText"/>
-
-    <EditText
-      android:id="@+id/edit_hex"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:autofillHints="@+id/edit_hex"
-      android:background="@null"
-      android:digits="0123456789ABCDEFabcdef"
-      android:hint="@string/hex"
-      android:imeOptions="actionGo"
-      android:inputType="textNoSuggestions"
-      android:labelFor="@+id/edit_hex"
-      android:maxLength="8"
-      android:maxLines="1"
-      android:minEms="5"
-      android:textColor="?android:attr/textColorPrimary"
-      android:textSize="18sp"
-      tools:ignore="UnusedAttribute"/>
-
-  </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

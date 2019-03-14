@@ -37,3 +37,6 @@ dependencies {
     implementation deps.androidx.appcompat
     implementation deps.androidx.preference
 }
+repositories {
+    mavenCentral()
+}

@@ -2,22 +2,21 @@ package com.pref.color.picker;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceDialogFragmentCompat;
+import com.pref.color.picker.v2.ColorPicker;
+import com.pref.color.picker.v2.OpacityBar;
+import com.pref.color.picker.v2.SVBar;
 
 public class ColorPickerDialog extends PreferenceDialogFragmentCompat
-    implements ColorPickerView.OnColorChangedListener, TextWatcher {
+    implements ColorPicker.OnColorChangedListener {
 
   private Context mContext;
 
-  private ColorPickerView mColorPicker;
-  private ColorPanelView mNewColorPanel;
-  private EditText mHexEdit;
+  private ColorPicker picker;
+  private SVBar svBar;
+  private OpacityBar opacityBar;
 
   private ColorPreference mPreference;
 
@@ -39,27 +38,23 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
   protected void onBindDialogView(View view) {
     super.onBindDialogView(view);
 
-    mColorPicker = view.findViewById(R.id.color_picker);
-    ColorPanelView oldColorPanel = view.findViewById(R.id.old_color_panel);
-    mNewColorPanel = view.findViewById(R.id.new_color_panel);
-    mHexEdit = view.findViewById(R.id.edit_hex);
+    picker = view.findViewById(R.id.picker);
+    svBar = view.findViewById(R.id.svbar);
+    opacityBar = view.findViewById(R.id.opacitybar);
 
     mPreference = (ColorPreference) getPreference();
     int color = mPreference.getColor();
-    mColorPicker.setColor(color, true);
-    oldColorPanel.setColor(color);
-    mNewColorPanel.setColor(color);
-    mHexEdit.setText(String.format("%08X", color));
-
-    mColorPicker.setAlphaSliderVisible(true);
-    mColorPicker.setOnColorChangedListener(this);
-    mHexEdit.addTextChangedListener(this);
+    picker.addSVBar(svBar);
+    picker.addOpacityBar(opacityBar);
+    picker.setOldCenterColor(color);
+    picker.setColor(color);
+    picker.setOnColorChangedListener(this);
   }
 
   @Override
   public void onDialogClosed(boolean positiveResult) {
     if (positiveResult) {
-      int color = mColorPicker.getColor();
+      int color = picker.getColor();
       if (mPreference.callChangeListener(color)) {
         mPreference.setColor(color);
       }
@@ -68,31 +63,5 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
 
   @Override
   public void onColorChanged(int newColor) {
-    mNewColorPanel.setColor(newColor);
-    mHexEdit.setText(String.format("%08X", newColor));
-
-    if (mHexEdit.hasFocus()) {
-      InputMethodManager imm =
-          (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-      imm.hideSoftInputFromWindow(mHexEdit.getWindowToken(), 0);
-      mHexEdit.clearFocus();
-    }
-  }
-
-  @Override
-  public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-  @Override
-  public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-  @Override
-  public void afterTextChanged(Editable s) {
-    if (mHexEdit.isFocused()) {
-      int color = Util.convertToColorInt(s.toString());
-      if (color != mColorPicker.getColor()) {
-        mColorPicker.setColor(color, false);
-        mNewColorPanel.setColor(color);
-      }
-    }
   }
 }

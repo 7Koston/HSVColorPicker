@@ -3,18 +3,17 @@ package com.github.koston.preference;
 import android.os.Bundle;
 import android.view.View;
 import androidx.preference.PreferenceDialogFragmentCompat;
-import com.github.koston.preference.view.ColorPicker;
-import com.github.koston.preference.view.OpacityBar;
-import com.github.koston.preference.view.SaturationBar;
-import com.github.koston.preference.view.ValueBar;
+import com.github.koston.preference.view2.ColorPicker;
+import com.github.koston.preference.view2.OmniBar;
+import com.github.koston.preference.view2.OpacityBar;
 
 public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     implements ColorPicker.OnColorChangedListener {
 
   private ColorPicker picker;
-  private SaturationBar saturationBar;
+  private OmniBar saturationBar;
   private OpacityBar opacityBar;
-  private ValueBar valueBar;
+  private OmniBar valueBar;
 
   private ColorPreference mPreference;
 
@@ -40,8 +39,10 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     picker.addSaturationBar(saturationBar);
     picker.addOpacityBar(opacityBar);
     picker.addValueBar(valueBar);
+    picker.setShowOldCenterColor(true);
+    picker.setShowCenter(true);
     picker.setOldCenterColor(color);
-    picker.setColor(color);
+    picker.setNewCenterColor(color);
     picker.setOnColorChangedListener(this);
   }
 

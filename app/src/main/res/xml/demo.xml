@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <com.pref.color.picker.ColorPreference
+  <com.github.koston.preference.ColorPreference
     style="@style/AppTheme.PreferenceDialog"
     android:defaultValue="@color/colorAccent"
     android:key="color_first"

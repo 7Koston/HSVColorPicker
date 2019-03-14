@@ -1,4 +1,4 @@
-package com.pref.color.picker;
+package com.github.koston.preference;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;

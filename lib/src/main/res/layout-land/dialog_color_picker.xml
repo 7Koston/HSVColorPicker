@@ -5,21 +5,29 @@
   android:layout_height="match_parent"
   android:orientation="horizontal">
 
-  <com.pref.color.picker.v2.ColorPicker
+  <com.github.koston.preference.view.ColorPicker
     android:id="@+id/picker"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"/>
 
-  <com.pref.color.picker.v2.SVBar
-    android:id="@+id/svbar"
+  <com.github.koston.preference.view.SaturationBar
+    android:id="@+id/saturationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:layout_gravity="center"
     app:bar_orientation_horizontal="false"/>
 
-  <com.pref.color.picker.v2.OpacityBar
+  <com.github.koston.preference.view.ValueBar
+    android:id="@+id/valueBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:layout_gravity="center"
+    app:bar_orientation_horizontal="false"/>
+
+  <com.github.koston.preference.view.OpacityBar
     android:id="@+id/opacitybar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

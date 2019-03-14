@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <declare-styleable name="ColorPreference">
-    <attr format="boolean|reference" name="indicatorColorPreview"/>
-  </declare-styleable>
-
-  <declare-styleable name="ColorPicker" parent="ColorPreference">
+  <declare-styleable name="ColorPicker">
     <attr format="dimension" name="color_wheel_radius"/>
     <attr format="dimension" name="color_wheel_thickness"/>
     <attr format="dimension" name="color_center_radius"/>
@@ -14,12 +10,70 @@
     <attr format="dimension" name="color_pointer_halo_radius"/>
   </declare-styleable>
 
-  <declare-styleable name="ColorBars" parent="ColorPreference">
+  <declare-styleable name="ColorBars">
     <attr format="dimension" name="bar_thickness"/>
     <attr format="dimension" name="bar_length"/>
     <attr format="dimension" name="bar_pointer_radius"/>
     <attr format="dimension" name="bar_pointer_halo_radius"/>
     <attr format="boolean" name="bar_orientation_horizontal"/>
+  </declare-styleable>
+
+  <declare-styleable name="OpacityBar">
+    <attr name="bar_thickness"/>
+    <attr name="bar_length"/>
+    <attr name="bar_pointer_radius"/>
+    <attr name="bar_pointer_halo_radius"/>
+    <attr name="bar_orientation_horizontal"/>
+  </declare-styleable>
+
+  <declare-styleable name="SaturationBar">
+    <attr name="bar_thickness"/>
+    <attr name="bar_length"/>
+    <attr name="bar_pointer_radius"/>
+    <attr name="bar_pointer_halo_radius"/>
+    <attr name="bar_orientation_horizontal"/>
+  </declare-styleable>
+
+  <declare-styleable name="SVBar">
+    <attr name="bar_thickness"/>
+    <attr name="bar_length"/>
+    <attr name="bar_pointer_radius"/>
+    <attr name="bar_pointer_halo_radius"/>
+    <attr name="bar_orientation_horizontal"/>
+  </declare-styleable>
+
+  <declare-styleable name="ValueBar">
+    <attr name="bar_thickness"/>
+    <attr name="bar_length"/>
+    <attr name="bar_pointer_radius"/>
+    <attr name="bar_pointer_halo_radius"/>
+    <attr name="bar_orientation_horizontal"/>
+  </declare-styleable>
+
+  <declare-styleable name="OmniBar">
+    <attr name="bar_type">
+      <enum name="opacity" value="-1"/>
+      <enum name="saturation" value="1"/>
+      <enum name="value" value="2"/>
+    </attr>
+  </declare-styleable>
+
+  <declare-styleable name="ColorPreference">
+    <attr format="boolean|reference" name="indicatorColorPreview"/>
+    <attr format="boolean|reference" name="enable"/>
+    <!--ColorPicker-->
+    <attr name="color_wheel_radius"/>
+    <attr name="color_wheel_thickness"/>
+    <attr name="color_center_radius"/>
+    <attr name="color_center_halo_radius"/>
+    <attr name="color_pointer_radius"/>
+    <attr name="color_pointer_halo_radius"/>
+    <!--ColorBars-->
+    <attr name="bar_thickness"/>
+    <attr name="bar_length"/>
+    <attr name="bar_pointer_radius"/>
+    <attr name="bar_pointer_halo_radius"/>
+    <attr name="bar_orientation_horizontal"/>
   </declare-styleable>
 
 </resources>

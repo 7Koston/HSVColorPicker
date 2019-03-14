@@ -1,4 +1,4 @@
-package com.pref.color.picker;
+package com.github.koston.preference;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

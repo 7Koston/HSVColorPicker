@@ -2,57 +2,56 @@
 <resources>
 
   <declare-styleable name="ColorPicker">
-    <attr format="dimension" name="WheelRadius"/>
-    <attr format="dimension" name="WheelThickness"/>
-    <attr format="dimension" name="CenterCircleRadius"/>
-    <attr format="dimension" name="CenterCircleHaloRadius"/>
-    <attr format="dimension" name="PointerRadius"/>
-    <attr format="dimension" name="PointerHaloRadius"/>
+    <attr format="dimension" name="wheelRadius"/>
+    <attr format="dimension" name="wheelThickness"/>
+    <attr format="dimension" name="centerCircleRadius"/>
+    <attr format="dimension" name="centerCircleHaloRadius"/>
+    <attr format="dimension" name="pointerRadius"/>
+    <attr format="dimension" name="pointerHaloRadius"/>
   </declare-styleable>
 
   <declare-styleable name="ColorBars">
-    <attr format="dimension" name="BarThickness"/>
-    <attr format="dimension" name="BarLength"/>
-    <attr format="dimension" name="BarPointerRadius"/>
-    <attr format="dimension" name="BarPointerHaloRadius"/>
-    <attr format="boolean" name="BarOrientationHorizontal"/>
+    <attr format="dimension" name="barThickness"/>
+    <attr format="dimension" name="barLength"/>
+    <attr format="dimension" name="barPointerRadius"/>
+    <attr format="dimension" name="barPointerHaloRadius"/>
+    <attr format="boolean" name="barOrientationHorizontal"/>
   </declare-styleable>
 
   <declare-styleable name="OpacityBar">
-    <attr name="BarThickness"/>
-    <attr name="BarLength"/>
-    <attr name="BarPointerRadius"/>
-    <attr name="BarPointerHaloRadius"/>
-    <attr name="BarOrientationHorizontal"/>
+    <attr name="barThickness"/>
+    <attr name="barLength"/>
+    <attr name="barPointerRadius"/>
+    <attr name="barPointerHaloRadius"/>
+    <attr name="barOrientationHorizontal"/>
   </declare-styleable>
 
   <declare-styleable name="SaturationValueBar">
-    <attr name="BarType">
+    <attr name="barType">
       <enum name="saturation" value="1"/>
       <enum name="value" value="2"/>
     </attr>
-    <attr name="BarThickness"/>
-    <attr name="BarLength"/>
-    <attr name="BarPointerRadius"/>
-    <attr name="BarPointerHaloRadius"/>
-    <attr name="BarOrientationHorizontal"/>
+    <attr name="barThickness"/>
+    <attr name="barLength"/>
+    <attr name="barPointerRadius"/>
+    <attr name="barPointerHaloRadius"/>
+    <attr name="barOrientationHorizontal"/>
   </declare-styleable>
 
   <declare-styleable name="ColorPreference">
     <attr format="boolean|reference" name="indicatorColorPreview"/>
     <!--ColorPicker-->
-    <attr name="WheelRadius"/>
-    <attr name="WheelThickness"/>
-    <attr name="CenterCircleRadius"/>
-    <attr name="CenterCircleHaloRadius"/>
-    <attr name="PointerRadius"/>
-    <attr name="PointerHaloRadius"/>
+    <attr name="wheelRadius"/>
+    <attr name="wheelThickness"/>
+    <attr name="centerCircleRadius"/>
+    <attr name="centerCircleHaloRadius"/>
+    <attr name="pointerRadius"/>
+    <attr name="pointerHaloRadius"/>
     <!--ColorBars-->
-    <attr name="BarThickness"/>
-    <attr name="BarLength"/>
-    <attr name="BarPointerRadius"/>
-    <attr name="BarPointerHaloRadius"/>
-    <attr name="BarOrientationHorizontal"/>
+    <attr name="barThickness"/>
+    <attr name="barLength"/>
+    <attr name="barPointerRadius"/>
+    <attr name="barPointerHaloRadius"/>
   </declare-styleable>
 
 </resources>

@@ -42,7 +42,7 @@ public class SaturationValueBar extends View {
   private static final String STATE_COLOR = "color";
   private static final String STATE_ALPHA = "alpha";
 
-  private int mType;
+  private int mBarType;
   private int mBarThickness;
   private int mBarLength;
   private int mBarPointerRadius;
@@ -88,7 +88,7 @@ public class SaturationValueBar extends View {
   }
 
   public int getType() {
-    return mType;
+    return mBarType;
   }
 
   public OnOmniChangedListener getOnOmniChangedListener() {
@@ -104,31 +104,31 @@ public class SaturationValueBar extends View {
         getContext().obtainStyledAttributes(attrs, R.styleable.SaturationValueBar, defStyle, 0);
     final Resources r = getContext().getResources();
 
-    int type = a.getInt(R.styleable.SaturationValueBar_BarType, ColorPicker.SOURCE_OUTSIDE);
+    int type = a.getInt(R.styleable.SaturationValueBar_barType, ColorPicker.SOURCE_OUTSIDE);
     if (type == ColorPicker.TYPE_SATURATION || type == ColorPicker.TYPE_VALUE) {
-      mType = type;
+      mBarType = type;
     } else {
       Log.w(TAG, "assign 'bar_type' in XML Layout, SaturationValue otherwise inoperable");
     }
 
     mBarThickness =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_BarThickness,
+            R.styleable.SaturationValueBar_barThickness,
             r.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_BarLength,
+            R.styleable.SaturationValueBar_barLength,
             r.getDimensionPixelSize(R.dimen.defaultBarLength));
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_BarPointerRadius,
+            R.styleable.SaturationValueBar_barPointerRadius,
             r.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
     mBarPointerHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_BarPointerHaloRadius,
+            R.styleable.SaturationValueBar_barPointerHaloRadius,
             r.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
-    mBarIsHorizontal = a.getBoolean(R.styleable.SaturationValueBar_BarOrientationHorizontal, true);
+    mBarIsHorizontal = a.getBoolean(R.styleable.SaturationValueBar_barOrientationHorizontal, true);
 
     a.recycle();
 
@@ -235,7 +235,8 @@ public class SaturationValueBar extends View {
     mSVToPosFactor = ((float) mBarLength) / 1;
 
     if (!isInEditMode()) {
-      mBarPointerPosition = Math.round((mSVToPosFactor * mHSVColor[mType]) + mBarPointerHaloRadius);
+      mBarPointerPosition = Math
+          .round((mSVToPosFactor * mHSVColor[mBarType]) + mBarPointerHaloRadius);
     } else {
       mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
     }
@@ -326,7 +327,7 @@ public class SaturationValueBar extends View {
 
   public void initializeColor(int alpha, float[] color) {
     mAlpha = alpha;
-    mBarPointerPosition = Math.round(((mSVToPosFactor * color[mType])) + mBarPointerHaloRadius);
+    mBarPointerPosition = Math.round(((mSVToPosFactor * color[mBarType])) + mBarPointerHaloRadius);
     setColor(color, true);
   }
 
@@ -359,24 +360,24 @@ public class SaturationValueBar extends View {
     mBarPointerPaint.setColor(getDisplayColor(color));
     if (!initialize) {
       if (mPicker != null) {
-        mPicker.setColor(mAlpha, mHSVColor, mType);
+        mPicker.setColor(mAlpha, mHSVColor, mBarType);
       }
     }
     invalidate();
   }
 
   private void setSV(float omni) {
-    mHSVColor[mType] = omni;
+    mHSVColor[mBarType] = omni;
   }
 
   private int getDisplayColor(float[] color) {
-    return getDisplayColor(color, color[mType]);
+    return getDisplayColor(color, color[mBarType]);
   }
 
   private int getDisplayColor(float[] color, float omni) {
     float[] col = new float[3];
     System.arraycopy(color, 0, col, 0, 3);
-    col[mType] = omni;
+    col[mBarType] = omni;
     return Color.HSVToColor(mAlpha, col);
   }
 
@@ -426,8 +427,8 @@ public class SaturationValueBar extends View {
     void onOmniChanged(int omni);
   }
 
-  public void setType(int type) {
-    this.mType = type;
+  public void setBarType(int type) {
+    this.mBarType = type;
   }
 
   public void setBarThickness(int barThickness) {
@@ -436,6 +437,7 @@ public class SaturationValueBar extends View {
 
   public void setBarLength(int barLength) {
     this.mBarLength = barLength;
+    mPreferredBarLength = barLength;
   }
 
   public void setBarPointerRadius(int barPointerRadius) {
@@ -444,13 +446,5 @@ public class SaturationValueBar extends View {
 
   public void setBarPointerHaloRadius(int barPointerHaloRadius) {
     this.mBarPointerHaloRadius = barPointerHaloRadius;
-  }
-
-  public void setBarPointerPosition(int barPointerPosition) {
-    this.mBarPointerPosition = barPointerPosition;
-  }
-
-  public void setBarIsHorizontal(boolean barIsHorizontal) {
-    this.mBarIsHorizontal = barIsHorizontal;
   }
 }

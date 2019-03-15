@@ -140,30 +140,30 @@ public class ColorPicker extends View {
 
     mColorWheelThickness =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_WheelThickness,
+            R.styleable.ColorPicker_wheelThickness,
             b.getDimensionPixelSize(R.dimen.defaultWheelThickness));
     mColorWheelRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_WheelRadius,
+            R.styleable.ColorPicker_wheelRadius,
             b.getDimensionPixelSize(R.dimen.defaultWheelRadius));
     mPreferredColorWheelRadius = mColorWheelRadius;
     mColorCenterRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_CenterCircleRadius,
+            R.styleable.ColorPicker_centerCircleRadius,
             b.getDimensionPixelSize(R.dimen.defaultCenterRadius));
     mPreferredColorCenterRadius = mColorCenterRadius;
     mColorCenterHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_CenterCircleHaloRadius,
+            R.styleable.ColorPicker_centerCircleHaloRadius,
             b.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
     mPreferredColorCenterHaloRadius = mColorCenterHaloRadius;
     mColorPointerRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_PointerRadius,
+            R.styleable.ColorPicker_pointerRadius,
             b.getDimensionPixelSize(R.dimen.defaultPointerRadius));
     mColorPointerHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_PointerHaloRadius,
+            R.styleable.ColorPicker_pointerHaloRadius,
             b.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
 
     a.recycle();

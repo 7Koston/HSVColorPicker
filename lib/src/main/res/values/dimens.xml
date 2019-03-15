@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!-- Standart dimens for the color wheel -->
+  <!-- Default dimens for the color wheel -->
   <dimen name="defaultWheelRadius">124dp</dimen>
   <dimen name="defaultWheelThickness">8dp</dimen>
   <dimen name="defaultCenterHaloRadius">60dp</dimen>
@@ -8,7 +8,7 @@
   <dimen name="defaultPointerHaloRadius">18dp</dimen>
   <dimen name="defaultPointerRadius">14dp</dimen>
 
-  <!-- Standart dimens for the bars -->
+  <!-- Default dimens for the bars -->
   <dimen name="defaultBarThickness">4dp</dimen>
   <dimen name="defaultBarLength">240dp</dimen>
   <dimen name="defaultBarPointerRadius">6dp</dimen>

@@ -34,6 +34,33 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     OpacityBar opacityBar = view.findViewById(R.id.opacityBar);
     SaturationValueBar valueBar = view.findViewById(R.id.valueBar);
 
+    int barThickness = mPreference.getBarThickness();
+    int barLength = mPreference.getBarLength();
+    int barPointerRadius = mPreference.getBarPointerRadius();
+    int barPointerHaloRadius = mPreference.getBarPointerHaloRadius();
+
+    picker.setColorWheelRadius(mPreference.getColorWheelRadius());
+    picker.setColorWheelThickness(mPreference.getColorWheelThickness());
+    picker.setColorCenterRadius(mPreference.getColorCenterRadius());
+    picker.setColorCenterHaloRadius(mPreference.getColorCenterHaloRadius());
+    picker.setColorPointerRadius(mPreference.getColorPointerRadius());
+    picker.setColorPointerHaloRadius(mPreference.getBarPointerHaloRadius());
+
+    saturationBar.setBarThickness(barThickness);
+    saturationBar.setBarLength(barLength);
+    saturationBar.setBarPointerRadius(barPointerRadius);
+    saturationBar.setBarPointerHaloRadius(barPointerHaloRadius);
+
+    opacityBar.setBarThickness(barThickness);
+    opacityBar.setBarLength(barLength);
+    opacityBar.setBarPointerRadius(barPointerRadius);
+    opacityBar.setBarPointerHaloRadius(barPointerHaloRadius);
+
+    valueBar.setBarThickness(barThickness);
+    valueBar.setBarLength(barLength);
+    valueBar.setBarPointerRadius(barPointerRadius);
+    valueBar.setBarPointerHaloRadius(barPointerHaloRadius);
+
     picker.addSaturationBar(saturationBar);
     picker.addValueBar(valueBar);
     picker.addOpacityBar(opacityBar);
@@ -41,10 +68,6 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     picker.setOldCenterColor(color);
     picker.setOnColorChangedListener(this);
     picker.initializeColor(color, ColorPicker.SOURCE_OUTSIDE);
-  }
-
-  private void initParams() {
-
   }
 
   @Override

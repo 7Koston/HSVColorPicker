@@ -1,6 +1,7 @@
 package com.github.koston.preference;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -23,6 +24,12 @@ public class ColorPreference extends DialogPreference {
   private int colorCenterRadius;
   private int colorCenterHaloRadius;
   private int colorPointerRadius;
+  private int colorPointerHaloRadius;
+
+  private int barThickness;
+  private int barLength;
+  private int barPointerRadius;
+  private int barPointerHaloRadius;
 
   public ColorPreference(Context context) {
     super(context);
@@ -57,12 +64,55 @@ public class ColorPreference extends DialogPreference {
   }
 
   private void init(Context context, AttributeSet attrs) {
-    mDrawable = getContext().getResources().getDrawable(R.drawable.circle);
+    Resources b = context.getResources();
+    mDrawable = b.getDrawable(R.drawable.circle);
 
     if (attrs != null) {
       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorPreference);
 
       asIndicator = a.getBoolean(R.styleable.ColorPreference_indicatorColorPreview, true);
+
+      colorWheelThickness =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_wheelThickness,
+              b.getDimensionPixelSize(R.dimen.defaultWheelThickness));
+      colorWheelRadius =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_wheelRadius,
+              b.getDimensionPixelSize(R.dimen.defaultWheelRadius));
+      colorCenterRadius =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_centerCircleRadius,
+              b.getDimensionPixelSize(R.dimen.defaultCenterRadius));
+      colorCenterHaloRadius =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_centerCircleHaloRadius,
+              b.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
+      colorPointerRadius =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_pointerRadius,
+              b.getDimensionPixelSize(R.dimen.defaultPointerRadius));
+      colorPointerHaloRadius =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_pointerHaloRadius,
+              b.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
+
+      barThickness =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_barThickness,
+              b.getDimensionPixelSize(R.dimen.defaultBarThickness));
+      barLength =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_barLength,
+              b.getDimensionPixelSize(R.dimen.defaultBarLength));
+      barPointerRadius =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_barPointerRadius,
+              b.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
+      barPointerHaloRadius =
+          a.getDimensionPixelSize(
+              R.styleable.ColorPreference_barPointerHaloRadius,
+              b.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
 
       a.recycle();
     }
@@ -96,5 +146,45 @@ public class ColorPreference extends DialogPreference {
   @SuppressWarnings("deprecation")
   protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
     setColor(restorePersistedValue ? getPersistedInt(mColor) : (int) defaultValue);
+  }
+
+  public int getColorWheelThickness() {
+    return colorWheelThickness;
+  }
+
+  public int getColorWheelRadius() {
+    return colorWheelRadius;
+  }
+
+  public int getColorCenterRadius() {
+    return colorCenterRadius;
+  }
+
+  public int getColorCenterHaloRadius() {
+    return colorCenterHaloRadius;
+  }
+
+  public int getColorPointerRadius() {
+    return colorPointerRadius;
+  }
+
+  public int getColorPointerHaloRadius() {
+    return colorPointerHaloRadius;
+  }
+
+  public int getBarThickness() {
+    return barThickness;
+  }
+
+  public int getBarLength() {
+    return barLength;
+  }
+
+  public int getBarPointerRadius() {
+    return barPointerRadius;
+  }
+
+  public int getBarPointerHaloRadius() {
+    return barPointerHaloRadius;
   }
 }

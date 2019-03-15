@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
   android:orientation="vertical">
 
   <com.github.koston.preference.view.ColorPicker
@@ -15,26 +15,26 @@
     android:id="@+id/saturationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="6dp"
     android:layout_gravity="center"
-    app:BarOrientationHorizontal="true"
-    app:BarType="saturation"/>
+    app:barOrientationHorizontal="true"
+    app:barType="saturation"/>
 
   <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/valueBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="6dp"
     android:layout_gravity="center"
-    app:BarOrientationHorizontal="true"
-    app:BarType="value"/>
+    app:barOrientationHorizontal="true"
+    app:barType="value"/>
 
   <com.github.koston.preference.view.OpacityBar
     android:id="@+id/opacityBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="6dp"
     android:layout_gravity="center"
-    app:BarOrientationHorizontal="true"/>
+    app:barOrientationHorizontal="true"/>
 
 </LinearLayout>

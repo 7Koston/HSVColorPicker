@@ -99,21 +99,21 @@ public class OpacityBar extends View {
 
     mBarThickness =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_BarThickness,
+            R.styleable.OpacityBar_barThickness,
             b.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_BarLength, b.getDimensionPixelSize(R.dimen.defaultBarLength));
+            R.styleable.OpacityBar_barLength, b.getDimensionPixelSize(R.dimen.defaultBarLength));
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_BarPointerRadius,
+            R.styleable.OpacityBar_barPointerRadius,
             b.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
     mBarPointerHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_BarPointerHaloRadius,
+            R.styleable.OpacityBar_barPointerHaloRadius,
             b.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
-    mBarIsHorizontal = a.getBoolean(R.styleable.OpacityBar_BarOrientationHorizontal, true);
+    mBarIsHorizontal = a.getBoolean(R.styleable.OpacityBar_barOrientationHorizontal, true);
 
     a.recycle();
 
@@ -426,6 +426,7 @@ public class OpacityBar extends View {
 
   public void setBarLength(int barLength) {
     this.mBarLength = barLength;
+    mPreferredBarLength = barLength;
   }
 
   public void setBarPointerRadius(int barPointerRadius) {
@@ -434,13 +435,5 @@ public class OpacityBar extends View {
 
   public void setBarPointerHaloRadius(int barPointerHaloRadius) {
     this.mBarPointerHaloRadius = barPointerHaloRadius;
-  }
-
-  public void setBarPointerPosition(int barPointerPosition) {
-    this.mBarPointerPosition = barPointerPosition;
-  }
-
-  public void setBarIsHorizontal(boolean barIsHorizontal) {
-    this.mBarIsHorizontal = barIsHorizontal;
   }
 }

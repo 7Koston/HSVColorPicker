@@ -6,33 +6,35 @@
   android:orientation="horizontal">
 
   <com.github.koston.preference.view.ColorPicker
-    android:id="@+id/picker"
+    android:id="@+id/hue"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"/>
 
-  <com.github.koston.preference.view.SaturationBar
+  <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/saturationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:layout_gravity="center"
-    app:bar_orientation_horizontal="false"/>
+    app:BarOrientationHorizontal="false"
+    app:BarType="saturation"/>
 
-  <com.github.koston.preference.view.ValueBar
+  <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/valueBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:layout_gravity="center"
-    app:bar_orientation_horizontal="false"/>
+    app:BarOrientationHorizontal="false"
+    app:BarType="value"/>
 
   <com.github.koston.preference.view.OpacityBar
-    android:id="@+id/opacitybar"
+    android:id="@+id/opacityBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:layout_gravity="center"
-    app:bar_orientation_horizontal="false"/>
+    app:BarOrientationHorizontal="false"/>
 
 </LinearLayout>

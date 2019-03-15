@@ -18,6 +18,12 @@ public class ColorPreference extends DialogPreference {
   private boolean asIndicator;
   private ImageView ivIndicator;
 
+  private int colorWheelThickness;
+  private int colorWheelRadius;
+  private int colorCenterRadius;
+  private int colorCenterHaloRadius;
+  private int colorPointerRadius;
+
   public ColorPreference(Context context) {
     super(context);
     init(context, null);
@@ -25,6 +31,11 @@ public class ColorPreference extends DialogPreference {
 
   public ColorPreference(Context context, AttributeSet attrs) {
     super(context, attrs, R.attr.dialogPreferenceStyle);
+    init(context, attrs);
+  }
+
+  public ColorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
     init(context, attrs);
   }
 
@@ -43,11 +54,6 @@ public class ColorPreference extends DialogPreference {
   @Override
   public int getDialogLayoutResource() {
     return R.layout.dialog_color_picker;
-  }
-
-  public ColorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-    init(context, attrs);
   }
 
   private void init(Context context, AttributeSet attrs) {

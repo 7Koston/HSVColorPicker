@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.github.koston.preference.view2;
+package com.github.koston.preference.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -33,122 +34,55 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.github.koston.preference.R;
 
-public class OmniBar extends View {
+public class SaturationValueBar extends View {
 
-  private static final String TAG = "omniBar";
+  private static final String TAG = "SaturationValueBar";
 
-  /*
-   * Constants used to save/restore the instance state.
-   */
   private static final String STATE_PARENT = "parent";
   private static final String STATE_COLOR = "color";
   private static final String STATE_ALPHA = "alpha";
-  /**
-   * Constants used to identify orientation.
-   */
-  private static final boolean ORIENTATION_HORIZONTAL = true;
-  private static final boolean ORIENTATION_VERTICAL = false;
-  /**
-   * Default orientation of the bar.
-   */
-  private static final boolean ORIENTATION_DEFAULT = ORIENTATION_HORIZONTAL;
-  /*
-   * Constant used to identify the type of bar
-   */
+
   private int mType;
-  /**
-   * The thickness of the bar.
-   */
   private int mBarThickness;
-  /**
-   * The length of the bar.
-   */
   private int mBarLength;
-  private int mPreferredBarLength;
-  /**
-   * The radius of the pointer.
-   */
   private int mBarPointerRadius;
-  /**
-   * The radius of the halo of the pointer.
-   */
   private int mBarPointerHaloRadius;
-  /**
-   * The position of the pointer on the bar.
-   */
   private int mBarPointerPosition;
-  /**
-   * {@code Paint} instance used to draw the bar.
-   */
+  private boolean mBarIsHorizontal;
+
+  private int mPreferredBarLength;
+
   private Paint mBarPaint;
-  /**
-   * {@code Paint} instance used to draw the pointer.
-   */
   private Paint mBarPointerPaint;
-  /**
-   * {@code Paint} instance used to draw the halo of the pointer.
-   */
   private Paint mBarPointerHaloPaint;
-  /**
-   * The rectangle enclosing the bar.
-   */
   private RectF mBarRect = new RectF();
-  /**
-   * {@code Shader} instance used to fill the shader of the paint.
-   */
+
   private Shader shader;
-  /**
-   * {@code true} if the user clicked on the pointer to start the move mode. <br> {@code false} once
-   * the user stops touching the screen.
-   *
-   * @see #onTouchEvent(android.view.MotionEvent)
-   */
+
   private boolean mIsMovingPointer;
-  /**
-   * The alpha value of the currently selected color.
-   */
+
   private int mAlpha;
-  /**
-   * An array of floats that can be built into a {@code Color} <br> Where we can extract the color
-   * from.
-   */
   private float[] mHSVColor = new float[3];
-  /**
-   * Factor used to calculate the position to the Omni-Value on the bar.
-   */
-  private float mPosToOmniFactor;
-  /**
-   * Factor used to calculate the Omni-Value to the postion on the bar.
-   */
-  private float mOmniToPosFactor;
-  /**
-   * {@code ColorPicker} instance used to control the ColorPicker.
-   */
-  private ColorPicker mPicker = null;
-  /**
-   * Used to toggle orientation between vertical and horizontal.
-   */
-  private boolean mOrientation;
-  /**
-   * Interface and listener so that changes in OmniBar are sent to the host activity/fragment
-   */
+
+  private float mPosToSVFactor;
+  private float mSVToPosFactor;
+
   private OnOmniChangedListener onOmniChangedListener;
-  /**
-   * Omni-Value of the latest entry of the onOmniChangedListener.
-   */
   private int oldChangedListenerColor;
 
-  public OmniBar(Context context) {
+  private ColorPicker mPicker = null;
+
+  public SaturationValueBar(Context context) {
     super(context);
     init(null, 0);
   }
 
-  public OmniBar(Context context, AttributeSet attrs) {
+  public SaturationValueBar(Context context, AttributeSet attrs) {
     super(context, attrs);
     init(attrs, 0);
   }
 
-  public OmniBar(Context context, AttributeSet attrs, int defStyle) {
+  public SaturationValueBar(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     init(attrs, defStyle);
   }
@@ -167,37 +101,34 @@ public class OmniBar extends View {
 
   private void init(AttributeSet attrs, int defStyle) {
     final TypedArray a =
-        getContext().obtainStyledAttributes(attrs, R.styleable.ColorBars, defStyle, 0);
-    final TypedArray b =
-        getContext().obtainStyledAttributes(attrs, R.styleable.OmniBar, defStyle, 0);
-    final Resources c = getContext().getResources();
+        getContext().obtainStyledAttributes(attrs, R.styleable.SaturationValueBar, defStyle, 0);
+    final Resources r = getContext().getResources();
 
-    int type = b.getInt(R.styleable.OmniBar_bar_type, ColorPicker.SOURCE_OUTSIDE);
+    int type = a.getInt(R.styleable.SaturationValueBar_BarType, ColorPicker.SOURCE_OUTSIDE);
     if (type == ColorPicker.TYPE_SATURATION || type == ColorPicker.TYPE_VALUE) {
       mType = type;
     } else {
-      Log.w(TAG, "assign 'bar_type' in XML Layout, OmniBar otherwise inoperable");
+      Log.w(TAG, "assign 'bar_type' in XML Layout, SaturationValue otherwise inoperable");
     }
-
-    b.recycle();
 
     mBarThickness =
         a.getDimensionPixelSize(
-            R.styleable.ColorBars_bar_thickness, c.getDimensionPixelSize(R.dimen.bar_thickness));
+            R.styleable.SaturationValueBar_BarThickness,
+            r.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
         a.getDimensionPixelSize(
-            R.styleable.ColorBars_bar_length, c.getDimensionPixelSize(R.dimen.bar_length));
+            R.styleable.SaturationValueBar_BarLength,
+            r.getDimensionPixelSize(R.dimen.defaultBarLength));
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorBars_bar_pointer_radius,
-            c.getDimensionPixelSize(R.dimen.bar_pointer_radius));
+            R.styleable.SaturationValueBar_BarPointerRadius,
+            r.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
     mBarPointerHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorBars_bar_pointer_halo_radius,
-            c.getDimensionPixelSize(R.dimen.bar_pointer_halo_radius));
-    mOrientation =
-        a.getBoolean(R.styleable.ColorBars_bar_orientation_horizontal, ORIENTATION_DEFAULT);
+            R.styleable.SaturationValueBar_BarPointerHaloRadius,
+            r.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
+    mBarIsHorizontal = a.getBoolean(R.styleable.SaturationValueBar_BarOrientationHorizontal, true);
 
     a.recycle();
 
@@ -213,8 +144,8 @@ public class OmniBar extends View {
     mBarPointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     mBarPointerPaint.setColor(0xff81ff00);
 
-    mPosToOmniFactor = 1 / ((float) mBarLength);
-    mOmniToPosFactor = ((float) mBarLength) / 1;
+    mPosToSVFactor = 1 / ((float) mBarLength);
+    mSVToPosFactor = ((float) mBarLength) / 1;
   }
 
   @Override
@@ -223,7 +154,7 @@ public class OmniBar extends View {
 
     // Variable orientation
     int measureSpec;
-    if (mOrientation == ORIENTATION_HORIZONTAL) {
+    if (mBarIsHorizontal) {
       measureSpec = widthMeasureSpec;
     } else {
       measureSpec = heightMeasureSpec;
@@ -242,7 +173,7 @@ public class OmniBar extends View {
 
     int barPointerHaloRadiusx2 = mBarPointerHaloRadius * 2;
     mBarLength = length - barPointerHaloRadiusx2;
-    if (mOrientation == ORIENTATION_VERTICAL) {
+    if (!mBarIsHorizontal) {
       setMeasuredDimension(barPointerHaloRadiusx2, (mBarLength + barPointerHaloRadiusx2));
     } else {
       setMeasuredDimension((mBarLength + barPointerHaloRadiusx2), barPointerHaloRadiusx2);
@@ -255,23 +186,23 @@ public class OmniBar extends View {
 
     // Fill the rectangle instance based on orientation
     int x1, y1;
-    if (mOrientation == ORIENTATION_HORIZONTAL) {
+    if (mBarIsHorizontal) {
       x1 = (mBarLength + mBarPointerHaloRadius);
       y1 = mBarThickness;
       mBarLength = w - (mBarPointerHaloRadius * 2);
       mBarRect.set(
           mBarPointerHaloRadius,
-          (mBarPointerHaloRadius - (mBarThickness / 2)),
+          (mBarPointerHaloRadius - (mBarThickness / 2f)),
           (mBarLength + (mBarPointerHaloRadius)),
-          (mBarPointerHaloRadius + (mBarThickness / 2)));
+          (mBarPointerHaloRadius + (mBarThickness / 2f)));
     } else {
       x1 = mBarThickness;
       y1 = (mBarLength + mBarPointerHaloRadius);
       mBarLength = h - (mBarPointerHaloRadius * 2);
       mBarRect.set(
-          (mBarPointerHaloRadius - (mBarThickness / 2)),
+          (mBarPointerHaloRadius - (mBarThickness / 2f)),
           mBarPointerHaloRadius,
-          (mBarPointerHaloRadius + (mBarThickness / 2)),
+          (mBarPointerHaloRadius + (mBarThickness / 2f)),
           (mBarLength + (mBarPointerHaloRadius)));
     }
 
@@ -283,7 +214,7 @@ public class OmniBar extends View {
               0,
               x1,
               y1,
-              new int[]{Color.WHITE, Color.HSVToColor(0xFF, mHSVColor)},
+              new int[]{getDisplayColor(mHSVColor, 0), getDisplayColor(mHSVColor, 1)},
               null,
               Shader.TileMode.CLAMP);
     } else {
@@ -300,12 +231,11 @@ public class OmniBar extends View {
     }
 
     mBarPaint.setShader(shader);
-    mPosToOmniFactor = 1 / ((float) mBarLength);
-    mOmniToPosFactor = ((float) mBarLength) / 1;
+    mPosToSVFactor = 1 / ((float) mBarLength);
+    mSVToPosFactor = ((float) mBarLength) / 1;
 
     if (!isInEditMode()) {
-      mBarPointerPosition =
-          Math.round((mOmniToPosFactor * mHSVColor[mType]) + mBarPointerHaloRadius);
+      mBarPointerPosition = Math.round((mSVToPosFactor * mHSVColor[mType]) + mBarPointerHaloRadius);
     } else {
       mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
     }
@@ -318,7 +248,7 @@ public class OmniBar extends View {
 
     // Calculate the center of the pointer.
     int cX, cY;
-    if (mOrientation == ORIENTATION_HORIZONTAL) {
+    if (mBarIsHorizontal) {
       cX = mBarPointerPosition;
       cY = mBarPointerHaloRadius;
     } else {
@@ -332,13 +262,14 @@ public class OmniBar extends View {
     canvas.drawCircle(cX, cY, mBarPointerRadius, mBarPointerPaint);
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   @Override
   public boolean onTouchEvent(MotionEvent event) {
     getParent().requestDisallowInterceptTouchEvent(true);
 
     // Convert coordinates to our internal coordinate system
     float dimen;
-    if (mOrientation == ORIENTATION_HORIZONTAL) {
+    if (mBarIsHorizontal) {
       dimen = event.getX();
     } else {
       dimen = event.getY();
@@ -350,7 +281,7 @@ public class OmniBar extends View {
         // Check whether the user pressed on (or near) the pointer
         if (dimen >= (mBarPointerHaloRadius) && dimen <= (mBarPointerHaloRadius + mBarLength)) {
           mBarPointerPosition = Math.round(dimen);
-          setOmniValueFromCoord(dimen);
+          setSVFromCoordinates(dimen);
           invalidate();
         }
         break;
@@ -360,21 +291,21 @@ public class OmniBar extends View {
           // Touch Event happens on the bar inside the end points
           if (dimen >= mBarPointerHaloRadius && dimen <= (mBarPointerHaloRadius + mBarLength)) {
             mBarPointerPosition = Math.round(dimen);
-            setOmniValueFromCoord(dimen);
+            setSVFromCoordinates(dimen);
             setColor(mHSVColor);
             invalidate();
 
             // Touch event happens on the start point or to the left of it.
           } else if (dimen < mBarPointerHaloRadius) {
             mBarPointerPosition = mBarPointerHaloRadius;
-            setOmniValue(0);
+            setSV(0);
             setColor(mHSVColor);
             invalidate();
 
             // Touch event happens to the right of the end point
           } else if (dimen > (mBarPointerHaloRadius - mBarLength)) {
             mBarPointerPosition = mBarPointerHaloRadius + mBarLength;
-            setOmniValue(1);
+            setSV(1);
             setColor(mHSVColor);
             invalidate();
           }
@@ -395,7 +326,7 @@ public class OmniBar extends View {
 
   public void initializeColor(int alpha, float[] color) {
     mAlpha = alpha;
-    mBarPointerPosition = Math.round(((mOmniToPosFactor * color[mType])) + mBarPointerHaloRadius);
+    mBarPointerPosition = Math.round(((mSVToPosFactor * color[mType])) + mBarPointerHaloRadius);
     setColor(color, true);
   }
 
@@ -405,7 +336,7 @@ public class OmniBar extends View {
 
   private void setColor(float[] color, boolean initialize) {
     int x1, y1;
-    if (mOrientation == ORIENTATION_HORIZONTAL) {
+    if (mBarIsHorizontal) {
       x1 = (mBarLength + mBarPointerHaloRadius);
       y1 = mBarThickness;
     } else {
@@ -434,7 +365,7 @@ public class OmniBar extends View {
     invalidate();
   }
 
-  private void setOmniValue(float omni) {
+  private void setSV(float omni) {
     mHSVColor[mType] = omni;
   }
 
@@ -446,32 +377,20 @@ public class OmniBar extends View {
     float[] col = new float[3];
     System.arraycopy(color, 0, col, 0, 3);
     col[mType] = omni;
-    int rgbColor = Color.HSVToColor(mAlpha, col);
-    return rgbColor;
+    return Color.HSVToColor(mAlpha, col);
   }
 
-  /**
-   * Calculate the color selected by the pointer on the bar.
-   *
-   * @param coord Coordinate of the pointer.
-   */
-  private void setOmniValueFromCoord(float coord) {
+  private void setSVFromCoordinates(float coord) {
     coord = coord - mBarPointerHaloRadius;
     if (coord < 0) {
       coord = 0;
     } else if (coord > mBarLength) {
       coord = mBarLength;
     }
-    float omni = mPosToOmniFactor * coord;
-    setOmniValue(omni);
+    float omni = mPosToSVFactor * coord;
+    setSV(omni);
   }
 
-  /**
-   * Adds a {@code ColorPicker} instance to the bar. <br>
-   * <br>
-   * WARNING: Don't change the color picker. it is done already when the bar is added to the
-   * ColorPicker
-   */
   public void setColorPicker(ColorPicker picker) {
     mPicker = picker;
   }
@@ -505,5 +424,33 @@ public class OmniBar extends View {
   public interface OnOmniChangedListener {
 
     void onOmniChanged(int omni);
+  }
+
+  public void setType(int type) {
+    this.mType = type;
+  }
+
+  public void setBarThickness(int barThickness) {
+    this.mBarThickness = barThickness;
+  }
+
+  public void setBarLength(int barLength) {
+    this.mBarLength = barLength;
+  }
+
+  public void setBarPointerRadius(int barPointerRadius) {
+    this.mBarPointerRadius = barPointerRadius;
+  }
+
+  public void setBarPointerHaloRadius(int barPointerHaloRadius) {
+    this.mBarPointerHaloRadius = barPointerHaloRadius;
+  }
+
+  public void setBarPointerPosition(int barPointerPosition) {
+    this.mBarPointerPosition = barPointerPosition;
+  }
+
+  public void setBarIsHorizontal(boolean barIsHorizontal) {
+    this.mBarIsHorizontal = barIsHorizontal;
   }
 }

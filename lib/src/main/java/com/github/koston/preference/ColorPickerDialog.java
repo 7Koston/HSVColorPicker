@@ -3,17 +3,14 @@ package com.github.koston.preference;
 import android.os.Bundle;
 import android.view.View;
 import androidx.preference.PreferenceDialogFragmentCompat;
-import com.github.koston.preference.view2.ColorPicker;
-import com.github.koston.preference.view2.OmniBar;
-import com.github.koston.preference.view2.OpacityBar;
+import com.github.koston.preference.view.ColorPicker;
+import com.github.koston.preference.view.OpacityBar;
+import com.github.koston.preference.view.SaturationValueBar;
 
 public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     implements ColorPicker.OnColorChangedListener {
 
   private ColorPicker picker;
-  private OmniBar saturationBar;
-  private OpacityBar opacityBar;
-  private OmniBar valueBar;
 
   private ColorPreference mPreference;
 
@@ -29,21 +26,25 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
   protected void onBindDialogView(View view) {
     super.onBindDialogView(view);
 
-    picker = view.findViewById(R.id.picker);
-    saturationBar = view.findViewById(R.id.saturationBar);
-    opacityBar = view.findViewById(R.id.opacitybar);
-    valueBar = view.findViewById(R.id.valueBar);
-
     mPreference = (ColorPreference) getPreference();
     int color = mPreference.getColor();
+
+    picker = view.findViewById(R.id.hue);
+    SaturationValueBar saturationBar = view.findViewById(R.id.saturationBar);
+    OpacityBar opacityBar = view.findViewById(R.id.opacityBar);
+    SaturationValueBar valueBar = view.findViewById(R.id.valueBar);
+
     picker.addSaturationBar(saturationBar);
-    picker.addOpacityBar(opacityBar);
     picker.addValueBar(valueBar);
-    picker.setShowOldCenterColor(true);
+    picker.addOpacityBar(opacityBar);
     picker.setShowCenter(true);
     picker.setOldCenterColor(color);
-    picker.setNewCenterColor(color);
     picker.setOnColorChangedListener(this);
+    picker.initializeColor(color, ColorPicker.SOURCE_OUTSIDE);
+  }
+
+  private void initParams() {
+
   }
 
   @Override

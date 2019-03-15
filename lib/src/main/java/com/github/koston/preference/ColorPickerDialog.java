@@ -2,6 +2,7 @@ package com.github.koston.preference;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import com.github.koston.preference.view.ColorPicker;
 import com.github.koston.preference.view.OpacityBar;
@@ -11,6 +12,7 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     implements ColorPicker.OnColorChangedListener {
 
   private ColorPicker picker;
+  private EditText hex;
 
   private ColorPreference mPreference;
 
@@ -30,6 +32,7 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     int color = mPreference.getColor();
 
     picker = view.findViewById(R.id.hue);
+    hex = view.findViewById(R.id.hex);
     SaturationValueBar saturationBar = view.findViewById(R.id.saturationBar);
     OpacityBar opacityBar = view.findViewById(R.id.opacityBar);
     SaturationValueBar valueBar = view.findViewById(R.id.valueBar);
@@ -82,5 +85,6 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
 
   @Override
   public void onColorChanged(int newColor) {
+    hex.setText("#" + Integer.toHexString(newColor).toUpperCase());
   }
 }

@@ -1,19 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <declare-styleable name="ColorPickerView">
-    <attr format="boolean|reference" name="alphaChannelVisible"/>
-    <attr format="string|reference" name="alphaChannelText"/>
-    <attr format="color|reference" name="sliderColor"/>
-    <attr format="color|reference" name="borderColor"/>
+  <declare-styleable name="ColorPicker">
+    <attr format="dimension" name="wheelRadius"/>
+    <attr format="dimension" name="wheelThickness"/>
+    <attr format="dimension" name="centerCircleRadius"/>
+    <attr format="dimension" name="centerCircleHaloRadius"/>
+    <attr format="dimension" name="pointerRadius"/>
+    <attr format="dimension" name="pointerHaloRadius"/>
+    <attr format="color" name="pointerHaloColor"/>
   </declare-styleable>
 
-  <declare-styleable name="ColorPanelView">
-    <attr name="borderColor"/>
+  <declare-styleable name="ColorBars">
+    <attr format="dimension" name="barThickness"/>
+    <attr format="dimension" name="barLength"/>
+    <attr format="dimension" name="barPointerRadius"/>
+    <attr format="dimension" name="barPointerHaloRadius"/>
+    <attr format="color" name="barPointerHaloColor"/>
+    <attr format="boolean" name="barOrientationHorizontal"/>
+  </declare-styleable>
+
+  <declare-styleable name="OpacityBar">
+    <attr name="barThickness"/>
+    <attr name="barLength"/>
+    <attr name="barPointerRadius"/>
+    <attr name="barPointerHaloRadius"/>
+    <attr name="barOrientationHorizontal"/>
+    <attr name="barPointerHaloColor"/>
+  </declare-styleable>
+
+  <declare-styleable name="SaturationValueBar">
+    <attr name="barType">
+      <enum name="saturation" value="1"/>
+      <enum name="value" value="2"/>
+    </attr>
+    <attr name="barThickness"/>
+    <attr name="barLength"/>
+    <attr name="barPointerRadius"/>
+    <attr name="barPointerHaloRadius"/>
+    <attr name="barOrientationHorizontal"/>
+    <attr name="barPointerHaloColor"/>
   </declare-styleable>
 
   <declare-styleable name="ColorPreference">
     <attr format="boolean|reference" name="indicatorColorPreview"/>
+    <!--ColorPicker-->
+    <attr name="hueWheelRadius"/>
+    <attr name="hueWheelThickness"/>
+    <attr name="centerCircleRadius"/>
+    <attr name="centerCircleHaloRadius"/>
+    <attr name="huePointerRadius"/>
+    <attr name="huePointerHaloRadius"/>
+    <!--ColorBars-->
+    <attr name="barThickness"/>
+    <attr name="barLength"/>
+    <attr name="barPointerRadius"/>
+    <attr name="barPointerHaloRadius"/>
+    <!--Both-->
+    <attr name="pointersHaloColor"/>
   </declare-styleable>
 
 </resources>

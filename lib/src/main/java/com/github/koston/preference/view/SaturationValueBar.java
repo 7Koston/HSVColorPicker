@@ -47,6 +47,7 @@ public class SaturationValueBar extends View {
   private int mBarLength;
   private int mBarPointerRadius;
   private int mBarPointerHaloRadius;
+  private int mBarPointerHaloColor;
   private int mBarPointerPosition;
   private boolean mBarIsHorizontal;
 
@@ -116,9 +117,7 @@ public class SaturationValueBar extends View {
             R.styleable.SaturationValueBar_barThickness,
             r.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
-        a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barLength,
-            r.getDimensionPixelSize(R.dimen.defaultBarLength));
+        a.getDimensionPixelSize(R.styleable.SaturationValueBar_barLength, R.dimen.defaultBarLength);
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(
@@ -128,6 +127,9 @@ public class SaturationValueBar extends View {
         a.getDimensionPixelSize(
             R.styleable.SaturationValueBar_barPointerHaloRadius,
             r.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
+    mBarPointerHaloColor =
+        a.getColor(
+            R.styleable.ColorPicker_pointerHaloColor, r.getColor(R.color.defaultPointerHaloColor));
     mBarIsHorizontal = a.getBoolean(R.styleable.SaturationValueBar_barOrientationHorizontal, true);
 
     a.recycle();
@@ -138,8 +140,7 @@ public class SaturationValueBar extends View {
     mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
 
     mBarPointerHaloPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    mBarPointerHaloPaint.setColor(Color.BLACK);
-    mBarPointerHaloPaint.setAlpha(0x50);
+    mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
 
     mBarPointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     mBarPointerPaint.setColor(0xff81ff00);
@@ -235,8 +236,8 @@ public class SaturationValueBar extends View {
     mSVToPosFactor = ((float) mBarLength) / 1;
 
     if (!isInEditMode()) {
-      mBarPointerPosition = Math
-          .round((mSVToPosFactor * mHSVColor[mBarType]) + mBarPointerHaloRadius);
+      mBarPointerPosition =
+          Math.round((mSVToPosFactor * mHSVColor[mBarType]) + mBarPointerHaloRadius);
     } else {
       mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
     }
@@ -446,5 +447,10 @@ public class SaturationValueBar extends View {
 
   public void setBarPointerHaloRadius(int barPointerHaloRadius) {
     this.mBarPointerHaloRadius = barPointerHaloRadius;
+  }
+
+  public void setBarPointerHaloColor(int barPointerHaloColor) {
+    this.mBarPointerHaloColor = barPointerHaloColor;
+    mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
   }
 }

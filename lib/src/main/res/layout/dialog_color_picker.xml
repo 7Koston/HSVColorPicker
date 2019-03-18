@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="wrap_content"
@@ -10,14 +10,16 @@
     android:id="@+id/hue"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"/>
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"/>
 
   <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/saturationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_gravity="center"
+    android:layout_below="@+id/hue"
+    android:layout_centerHorizontal="true"
     app:barOrientationHorizontal="true"
     app:barType="saturation"/>
 
@@ -26,7 +28,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_gravity="center"
+    android:layout_below="@+id/saturationBar"
+    android:layout_centerHorizontal="true"
     app:barOrientationHorizontal="true"
     app:barType="value"/>
 
@@ -35,7 +38,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_gravity="center"
+    android:layout_below="@+id/valueBar"
+    android:layout_centerHorizontal="true"
     app:barOrientationHorizontal="true"/>
 
   <EditText
@@ -43,14 +47,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_gravity="center"
-    android:autofillHints=""
-    android:labelFor="@id/hue"
+    android:layout_below="@+id/opacityBar"
+    android:layout_centerHorizontal="true"
+    android:autofillHints="@+id/hex"
+    android:background="@null"
+    android:digits="#0123456789ABCDEFabcdef"
+    android:hint="@string/hex"
+    android:imeOptions="actionGo"
+    android:inputType="textNoSuggestions"
+    android:labelFor="@+id/hex"
     android:maxLength="9"
-    android:minWidth="110dp"
-    android:textAlignment="center"
-    android:textColor="?android:attr/editTextColor"
+    android:maxLines="1"
+    android:minWidth="108dp"
+    android:textColor="?android:attr/textColorPrimary"
     android:textSize="18sp"
-    tools:ignore="LabelFor,TextFields,UnusedAttribute"/>
+    tools:ignore="UnusedAttribute"/>
 
-</LinearLayout>
+</RelativeLayout>

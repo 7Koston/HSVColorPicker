@@ -41,6 +41,7 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     int barLength = mPreference.getBarLength();
     int barPointerRadius = mPreference.getBarPointerRadius();
     int barPointerHaloRadius = mPreference.getBarPointerHaloRadius();
+    int pointersHaloColor = mPreference.getPointersHaloColor();
 
     picker.setColorWheelRadius(mPreference.getColorWheelRadius());
     picker.setColorWheelThickness(mPreference.getColorWheelThickness());
@@ -48,21 +49,25 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     picker.setColorCenterHaloRadius(mPreference.getColorCenterHaloRadius());
     picker.setColorPointerRadius(mPreference.getColorPointerRadius());
     picker.setColorPointerHaloRadius(mPreference.getBarPointerHaloRadius());
+    picker.setColorPointerHaloColor(pointersHaloColor);
 
     saturationBar.setBarThickness(barThickness);
     saturationBar.setBarLength(barLength);
     saturationBar.setBarPointerRadius(barPointerRadius);
     saturationBar.setBarPointerHaloRadius(barPointerHaloRadius);
+    saturationBar.setBarPointerHaloColor(pointersHaloColor);
 
     opacityBar.setBarThickness(barThickness);
     opacityBar.setBarLength(barLength);
     opacityBar.setBarPointerRadius(barPointerRadius);
     opacityBar.setBarPointerHaloRadius(barPointerHaloRadius);
+    opacityBar.setBarPointerHaloColor(pointersHaloColor);
 
     valueBar.setBarThickness(barThickness);
     valueBar.setBarLength(barLength);
     valueBar.setBarPointerRadius(barPointerRadius);
     valueBar.setBarPointerHaloRadius(barPointerHaloRadius);
+    valueBar.setBarPointerHaloColor(pointersHaloColor);
 
     picker.addSaturationBar(saturationBar);
     picker.addValueBar(valueBar);
@@ -85,6 +90,6 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
 
   @Override
   public void onColorChanged(int newColor) {
-    hex.setText("#" + Integer.toHexString(newColor).toUpperCase());
+    hex.setText(getString(R.string.hex_placeholder, Integer.toHexString(newColor).toUpperCase()));
   }
 }

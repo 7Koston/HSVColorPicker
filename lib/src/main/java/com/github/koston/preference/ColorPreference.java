@@ -19,6 +19,8 @@ public class ColorPreference extends DialogPreference {
   private boolean asIndicator;
   private ImageView ivIndicator;
 
+  private int pointersHaloColor;
+
   private int colorWheelThickness;
   private int colorWheelRadius;
   private int colorCenterRadius;
@@ -74,11 +76,11 @@ public class ColorPreference extends DialogPreference {
 
       colorWheelThickness =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_wheelThickness,
+              R.styleable.ColorPreference_hueWheelThickness,
               b.getDimensionPixelSize(R.dimen.defaultWheelThickness));
       colorWheelRadius =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_wheelRadius,
+              R.styleable.ColorPreference_hueWheelRadius,
               b.getDimensionPixelSize(R.dimen.defaultWheelRadius));
       colorCenterRadius =
           a.getDimensionPixelSize(
@@ -90,11 +92,11 @@ public class ColorPreference extends DialogPreference {
               b.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
       colorPointerRadius =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_pointerRadius,
+              R.styleable.ColorPreference_huePointerRadius,
               b.getDimensionPixelSize(R.dimen.defaultPointerRadius));
       colorPointerHaloRadius =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_pointerHaloRadius,
+              R.styleable.ColorPreference_huePointerHaloRadius,
               b.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
 
       barThickness =
@@ -113,6 +115,10 @@ public class ColorPreference extends DialogPreference {
           a.getDimensionPixelSize(
               R.styleable.ColorPreference_barPointerHaloRadius,
               b.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
+      pointersHaloColor =
+          a.getColor(
+              R.styleable.ColorPreference_pointersHaloColor,
+              b.getColor(R.color.defaultPointerHaloColor));
 
       a.recycle();
     }
@@ -186,5 +192,9 @@ public class ColorPreference extends DialogPreference {
 
   public int getBarPointerHaloRadius() {
     return barPointerHaloRadius;
+  }
+
+  public int getPointersHaloColor() {
+    return pointersHaloColor;
   }
 }

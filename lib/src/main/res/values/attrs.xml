@@ -8,6 +8,7 @@
     <attr format="dimension" name="centerCircleHaloRadius"/>
     <attr format="dimension" name="pointerRadius"/>
     <attr format="dimension" name="pointerHaloRadius"/>
+    <attr format="color" name="pointerHaloColor"/>
   </declare-styleable>
 
   <declare-styleable name="ColorBars">
@@ -15,6 +16,7 @@
     <attr format="dimension" name="barLength"/>
     <attr format="dimension" name="barPointerRadius"/>
     <attr format="dimension" name="barPointerHaloRadius"/>
+    <attr format="color" name="barPointerHaloColor"/>
     <attr format="boolean" name="barOrientationHorizontal"/>
   </declare-styleable>
 
@@ -24,6 +26,7 @@
     <attr name="barPointerRadius"/>
     <attr name="barPointerHaloRadius"/>
     <attr name="barOrientationHorizontal"/>
+    <attr name="barPointerHaloColor"/>
   </declare-styleable>
 
   <declare-styleable name="SaturationValueBar">
@@ -36,22 +39,25 @@
     <attr name="barPointerRadius"/>
     <attr name="barPointerHaloRadius"/>
     <attr name="barOrientationHorizontal"/>
+    <attr name="barPointerHaloColor"/>
   </declare-styleable>
 
   <declare-styleable name="ColorPreference">
     <attr format="boolean|reference" name="indicatorColorPreview"/>
     <!--ColorPicker-->
-    <attr name="wheelRadius"/>
-    <attr name="wheelThickness"/>
+    <attr name="hueWheelRadius"/>
+    <attr name="hueWheelThickness"/>
     <attr name="centerCircleRadius"/>
     <attr name="centerCircleHaloRadius"/>
-    <attr name="pointerRadius"/>
-    <attr name="pointerHaloRadius"/>
+    <attr name="huePointerRadius"/>
+    <attr name="huePointerHaloRadius"/>
     <!--ColorBars-->
     <attr name="barThickness"/>
     <attr name="barLength"/>
     <attr name="barPointerRadius"/>
     <attr name="barPointerHaloRadius"/>
+    <!--Both-->
+    <attr name="pointersHaloColor"/>
   </declare-styleable>
 
 </resources>

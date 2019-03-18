@@ -1,40 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:orientation="horizontal">
+  android:orientation="vertical">
 
   <com.github.koston.preference.view.ColorPicker
     android:id="@+id/hue"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"/>
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"/>
 
   <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/saturationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_gravity="center"
+    android:layout_above="@+id/hex"
+    android:layout_alignParentTop="true"
+    android:layout_toEndOf="@+id/hue"
+    android:layout_toRightOf="@+id/hue"
     app:barOrientationHorizontal="false"
     app:barType="saturation"/>
 
   <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/valueBar"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="6dp"
-    android:layout_gravity="center"
+    android:layout_above="@+id/hex"
+    android:layout_alignParentTop="true"
+    android:layout_toEndOf="@+id/saturationBar"
+    android:layout_toRightOf="@+id/saturationBar"
     app:barOrientationHorizontal="false"
     app:barType="value"/>
 
   <com.github.koston.preference.view.OpacityBar
     android:id="@+id/opacityBar"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="6dp"
-    android:layout_gravity="center"
+    android:layout_above="@+id/hex"
+    android:layout_alignParentTop="true"
+    android:layout_toEndOf="@+id/valueBar"
+    android:layout_toRightOf="@+id/valueBar"
     app:barOrientationHorizontal="false"/>
 
-</LinearLayout>
+  <EditText
+    android:id="@+id/hex"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:layout_alignBottom="@+id/hue"
+    android:layout_toEndOf="@+id/hue"
+    android:layout_toRightOf="@+id/hue"
+    android:autofillHints="@+id/hex"
+    android:background="@null"
+    android:digits="#0123456789ABCDEFabcdef"
+    android:hint="@string/hex"
+    android:imeOptions="actionGo"
+    android:inputType="textNoSuggestions"
+    android:labelFor="@+id/hex"
+    android:maxLength="9"
+    android:maxLines="1"
+    android:minWidth="108dp"
+    android:textColor="?android:attr/textColorPrimary"
+    android:textSize="18sp"
+    tools:ignore="UnusedAttribute"/>
+
+
+</RelativeLayout>

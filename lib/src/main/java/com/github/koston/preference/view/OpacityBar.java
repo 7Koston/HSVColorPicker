@@ -43,6 +43,7 @@ public class OpacityBar extends View {
   private int mBarLength;
   private int mBarPointerRadius;
   private int mBarPointerHaloRadius;
+  private int mBarPointerHaloColor;
   private int mBarPointerPosition;
   private boolean mBarIsHorizontal;
 
@@ -102,8 +103,7 @@ public class OpacityBar extends View {
             R.styleable.OpacityBar_barThickness,
             b.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
-        a.getDimensionPixelSize(
-            R.styleable.OpacityBar_barLength, b.getDimensionPixelSize(R.dimen.defaultBarLength));
+        a.getDimensionPixelSize(R.styleable.OpacityBar_barLength, R.dimen.defaultBarLength);
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(
@@ -113,6 +113,9 @@ public class OpacityBar extends View {
         a.getDimensionPixelSize(
             R.styleable.OpacityBar_barPointerHaloRadius,
             b.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
+    mBarPointerHaloColor =
+        a.getColor(
+            R.styleable.ColorPicker_pointerHaloColor, b.getColor(R.color.defaultPointerHaloColor));
     mBarIsHorizontal = a.getBoolean(R.styleable.OpacityBar_barOrientationHorizontal, true);
 
     a.recycle();
@@ -123,8 +126,7 @@ public class OpacityBar extends View {
     mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
 
     mBarPointerHaloPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    mBarPointerHaloPaint.setColor(Color.BLACK);
-    mBarPointerHaloPaint.setAlpha(0x50);
+    mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
 
     mBarPointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     mBarPointerPaint.setColor(0xff81ff00);
@@ -435,5 +437,10 @@ public class OpacityBar extends View {
 
   public void setBarPointerHaloRadius(int barPointerHaloRadius) {
     this.mBarPointerHaloRadius = barPointerHaloRadius;
+  }
+
+  public void setBarPointerHaloColor(int barPointerHaloColor) {
+    this.mBarPointerHaloColor = barPointerHaloColor;
+    mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
   }
 }

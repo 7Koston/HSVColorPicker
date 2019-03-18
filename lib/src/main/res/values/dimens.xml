@@ -3,8 +3,8 @@
   <!-- Default dimens for the color wheel -->
   <dimen name="defaultWheelRadius">124dp</dimen>
   <dimen name="defaultWheelThickness">8dp</dimen>
-  <dimen name="defaultCenterHaloRadius">60dp</dimen>
   <dimen name="defaultCenterRadius">54dp</dimen>
+  <dimen name="defaultCenterHaloRadius">60dp</dimen>
   <dimen name="defaultPointerRadius">14dp</dimen>
   <dimen name="defaultPointerHaloRadius">18dp</dimen>
 

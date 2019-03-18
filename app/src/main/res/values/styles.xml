@@ -13,7 +13,7 @@
   </style>
 
   <!-- Style for a DialogPreference Entry -->
-  <style name="AppTheme.PreferenceDialog" parent="Theme.AppCompat.DayNight.Dialog">
+  <style name="AppTheme.PreferenceDialog" parent="Theme.MaterialComponents.DayNight.Dialog">
     <item name="positiveButtonText">@android:string/ok</item>
     <item name="negativeButtonText">@android:string/cancel</item>
   </style>

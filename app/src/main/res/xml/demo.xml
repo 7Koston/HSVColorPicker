@@ -9,9 +9,17 @@
     android:key="color_first"
     android:summary="Disable alpha"
     android:title="Color 1"
-    app:barPointerHaloRadius="12dp"
-    app:barPointerRadius="6dp"
-    app:barThickness="6dp"
+    app:barLength="@dimen/defaultBarLength"
+    app:barPointerHaloRadius="@dimen/defaultBarPointerHaloRadius"
+    app:barPointerRadius="@dimen/defaultBarPointerRadius"
+    app:barThickness="@dimen/defaultBarThickness"
+    app:centerCircleHaloRadius="@dimen/defaultCenterHaloRadius"
+    app:centerCircleRadius="@dimen/defaultCenterRadius"
+    app:huePointerHaloRadius="@dimen/defaultPointerHaloRadius"
+    app:huePointerRadius="@dimen/defaultPointerRadius"
+    app:hueWheelRadius="@dimen/defaultWheelRadius"
+    app:hueWheelThickness="@dimen/defaultWheelThickness"
+    app:pointersHaloColor="@color/defaultPointerHaloColor"
     app:indicatorColorPreview="true"/>
 
   <androidx.preference.SwitchPreference

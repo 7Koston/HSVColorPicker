@@ -343,6 +343,12 @@ public class ColorPicker extends View {
     return mCenterNewColor;
   }
 
+  public void setColor(int color) {
+    float[] hsv = new float[3];
+    Color.colorToHSV(color, hsv);
+    setColor(Color.alpha(color), hsv, SOURCE_OUTSIDE);
+  }
+
   public void setColor(int alpha, float[] color, int source) {
 
     // A-HSV handling

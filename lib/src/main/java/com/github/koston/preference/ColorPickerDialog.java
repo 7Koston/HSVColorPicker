@@ -1,7 +1,10 @@
 package com.github.koston.preference;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import com.github.koston.preference.view.ColorPicker;
@@ -9,7 +12,7 @@ import com.github.koston.preference.view.OpacityBar;
 import com.github.koston.preference.view.SaturationValueBar;
 
 public class ColorPickerDialog extends PreferenceDialogFragmentCompat
-    implements ColorPicker.OnColorChangedListener {
+    implements ColorPicker.OnColorChangedListener, TextWatcher {
 
   private ColorPicker picker;
   private EditText hex;
@@ -76,6 +79,8 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     picker.setOldCenterColor(color);
     picker.setOnColorChangedListener(this);
     picker.initializeColor(color, ColorPicker.SOURCE_OUTSIDE);
+
+    hex.addTextChangedListener(this);
   }
 
   @Override
@@ -90,6 +95,25 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
 
   @Override
   public void onColorChanged(int newColor) {
-    hex.setText(getString(R.string.hex_placeholder, Integer.toHexString(newColor).toUpperCase()));
+    hex.clearFocus();
+    hex.setText(Integer.toHexString(newColor).toUpperCase());
+  }
+
+  @Override
+  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+  }
+
+  @Override
+  public void onTextChanged(CharSequence s, int start, int before, int count) {
+  }
+
+  @Override
+  public void afterTextChanged(Editable s) {
+    if (hex.isFocused()) {
+      if (s.length() == 8) {
+        picker.setColor((int) Long.parseLong(s.toString(), 16));
+        hex.onEditorAction(EditorInfo.IME_ACTION_DONE);
+      }
+    }
   }
 }

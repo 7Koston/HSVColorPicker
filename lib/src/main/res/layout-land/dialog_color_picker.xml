@@ -19,7 +19,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_above="@+id/hex"
+    android:layout_above="@+id/llHex"
     android:layout_alignParentTop="true"
     android:layout_toEndOf="@+id/hue"
     android:layout_toRightOf="@+id/hue"
@@ -31,7 +31,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_margin="6dp"
-    android:layout_above="@+id/hex"
+    android:layout_above="@+id/llHex"
     android:layout_alignParentTop="true"
     android:layout_toEndOf="@+id/saturationBar"
     android:layout_toRightOf="@+id/saturationBar"
@@ -43,33 +43,47 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_margin="6dp"
-    android:layout_above="@+id/hex"
+    android:layout_above="@+id/llHex"
     android:layout_alignParentTop="true"
     android:layout_toEndOf="@+id/valueBar"
     android:layout_toRightOf="@+id/valueBar"
     app:barOrientationHorizontal="false"/>
 
-  <EditText
-    android:id="@+id/hex"
+  <LinearLayout
+    android:id="@+id/llHex"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_alignBottom="@+id/hue"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
     android:layout_toEndOf="@+id/hue"
     android:layout_toRightOf="@+id/hue"
-    android:autofillHints="@+id/hex"
-    android:background="@null"
-    android:digits="#0123456789ABCDEFabcdef"
-    android:hint="@string/hex"
-    android:imeOptions="actionGo"
-    android:inputType="textNoSuggestions"
-    android:labelFor="@+id/hex"
-    android:maxLength="9"
-    android:maxLines="1"
-    android:minWidth="108dp"
-    android:textColor="?android:attr/textColorPrimary"
-    android:textSize="18sp"
-    tools:ignore="UnusedAttribute"/>
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/hex_placeholder"
+      android:textColor="?android:attr/textColorPrimary"
+      android:textSize="18sp"/>
+
+    <EditText
+      android:id="@+id/hex"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:autofillHints="@+id/hex"
+      android:background="@null"
+      android:digits="0123456789ABCDEFabcdef"
+      android:hint="@string/hex"
+      android:imeOptions="actionDone"
+      android:inputType="textNoSuggestions"
+      android:labelFor="@+id/hex"
+      android:maxLength="8"
+      android:maxLines="1"
+      android:textColor="?android:attr/textColorPrimary"
+      android:textSize="18sp"
+      tools:ignore="UnusedAttribute"/>
+  </LinearLayout>
 
 
 </RelativeLayout>

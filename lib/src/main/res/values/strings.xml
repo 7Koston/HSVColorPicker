@@ -1,5 +1,5 @@
 <resources>
   <string name="app_name">ColorPicker</string>
-  <string name="hex">HEX</string>
-  <string name="hex_placeholder">#%1s</string>
+  <string name="hex">FFFFFFFF</string>
+  <string name="hex_placeholder">#</string>
 </resources>

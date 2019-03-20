@@ -19,6 +19,8 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
 
   private ColorPreference mPreference;
 
+  private boolean hexChanging;
+
   static ColorPickerDialog newInstance(String key) {
     ColorPickerDialog dialog = new ColorPickerDialog();
     Bundle args = new Bundle(1);
@@ -81,6 +83,7 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     picker.initializeColor(color, ColorPicker.SOURCE_OUTSIDE);
 
     hex.addTextChangedListener(this);
+    hexChanging = true;
   }
 
   @Override
@@ -95,8 +98,11 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
 
   @Override
   public void onColorChanged(int newColor) {
-    hex.clearFocus();
-    hex.setText(Integer.toHexString(newColor).toUpperCase());
+    if (hexChanging) {
+      hexChanging = false;
+      hex.setText(Integer.toHexString(newColor));
+      hexChanging = true;
+    }
   }
 
   @Override
@@ -109,10 +115,12 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
 
   @Override
   public void afterTextChanged(Editable s) {
-    if (hex.isFocused()) {
+    if (hexChanging) {
       if (s.length() == 8) {
+        hexChanging = false;
         picker.setColor((int) Long.parseLong(s.toString(), 16));
         hex.onEditorAction(EditorInfo.IME_ACTION_DONE);
+        hex.clearFocus();
       }
     }
   }

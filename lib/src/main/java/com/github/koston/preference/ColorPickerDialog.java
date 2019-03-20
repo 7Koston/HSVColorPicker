@@ -82,6 +82,7 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     picker.setOnColorChangedListener(this);
     picker.initializeColor(color, ColorPicker.SOURCE_OUTSIDE);
 
+    hex.setText(Integer.toHexString(color).toUpperCase());
     hex.addTextChangedListener(this);
     hexChanging = true;
   }
@@ -100,7 +101,7 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
   public void onColorChanged(int newColor) {
     if (hexChanging) {
       hexChanging = false;
-      hex.setText(Integer.toHexString(newColor));
+      hex.setText(Integer.toHexString(newColor).toUpperCase());
       hexChanging = true;
     }
   }

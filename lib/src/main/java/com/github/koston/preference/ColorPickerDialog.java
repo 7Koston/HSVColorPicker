@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import com.github.koston.preference.view.ColorPicker;
 import com.github.koston.preference.view.OpacityBar;
@@ -27,6 +28,20 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     args.putString(ARG_KEY, key);
     dialog.setArguments(args);
     return dialog;
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (savedInstanceState != null) {
+      hexChanging = savedInstanceState.getBoolean("hexChanging");
+    }
+  }
+
+  @Override
+  public void onSaveInstanceState(@NonNull Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putBoolean("hexChanging", hexChanging);
   }
 
   @Override
@@ -118,7 +133,6 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
   public void afterTextChanged(Editable s) {
     if (hexChanging) {
       if (s.length() == 8) {
-        hexChanging = false;
         picker.setColor((int) Long.parseLong(s.toString(), 16));
         hex.onEditorAction(EditorInfo.IME_ACTION_DONE);
         hex.clearFocus();

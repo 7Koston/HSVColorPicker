@@ -33,7 +33,7 @@ Add the dependency:
 
 ```gradle
 dependencies {
-  implementation 'com.github.7Koston:pref-color-picker:1.0.7'
+  implementation 'com.github.7Koston:pref-color-picker:1.0.8'
 }
 ```
 

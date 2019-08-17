@@ -8,29 +8,14 @@ android {
     }
 
     compileSdkVersion buildConfig.compileSdk
+    buildToolsVersion buildConfig.buildTools
 
     defaultConfig {
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
-        versionCode 1
-        versionName "1.0.8"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
+        versionCode 9
+        versionName "1.0.9"
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            useProguard false
-            zipAlignEnabled true
-        }
-        debug {
-            minifyEnabled false
-            useProguard false
-            zipAlignEnabled true
-        }
-    }
-
 }
 
 dependencies {

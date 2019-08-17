@@ -33,7 +33,7 @@ Add the dependency:
 
 ```gradle
 dependencies {
-  implementation 'com.github.7Koston:HSVColorPicker:1.0.8'
+  implementation 'com.github.7Koston:HSVColorPicker:1.0.9'
 }
 ```
 

@@ -1,4 +1,4 @@
-package com.github.koston.preference;
+package com.github.koston.preference.sample;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

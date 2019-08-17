@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  package="com.github.koston.preference">
+  package="com.github.koston.preference.sample">
 
   <application
     android:icon="@mipmap/ic_launcher"
@@ -10,7 +10,7 @@
     android:theme="@style/AppTheme.Base"
     tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-    <activity android:name="com.github.koston.preference.MainActivity">
+    <activity android:name="com.github.koston.preference.sample.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>

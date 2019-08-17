@@ -1,9 +1,10 @@
-package com.github.koston.preference;
+package com.github.koston.preference.sample;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.preference.SwitchPreference;
+import com.github.koston.preference.ColorPreferenceFragmentCompat;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class DemoPreferenceFragment extends ColorPreferenceFragmentCompat {
@@ -28,16 +29,19 @@ public class DemoPreferenceFragment extends ColorPreferenceFragmentCompat {
                 .setMessage("Restart?")
                 .setPositiveButton(
                     android.R.string.yes,
-                    (dialog, which) ->
+                    (dialog, which) -> {
+                      Intent intent =
+                          mContext
+                              .getApplicationContext()
+                              .getPackageManager()
+                              .getLaunchIntentForPackage(
+                                  mContext.getApplicationContext().getPackageName());
+                      if (intent != null) {
                         startActivity(
-                            mContext
-                                .getApplicationContext()
-                                .getPackageManager()
-                                .getLaunchIntentForPackage(
-                                    mContext.getApplicationContext().getPackageName())
-                                .addFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK)))
+                            intent.addFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                      }
+                    })
                 .setNegativeButton(
                     android.R.string.cancel,
                     (dialog, which) -> themeMode.setChecked(!themeMode.isChecked()))

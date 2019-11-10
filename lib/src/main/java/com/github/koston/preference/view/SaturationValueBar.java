@@ -117,7 +117,9 @@ public class SaturationValueBar extends View {
             R.styleable.SaturationValueBar_barThickness,
             r.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
-        a.getDimensionPixelSize(R.styleable.SaturationValueBar_barLength, R.dimen.defaultBarLength);
+        a.getDimensionPixelSize(
+            R.styleable.SaturationValueBar_barLength,
+            r.getDimensionPixelSize(R.dimen.defaultBarLength));
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(

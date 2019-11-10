@@ -103,7 +103,8 @@ public class OpacityBar extends View {
             R.styleable.OpacityBar_barThickness,
             b.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
-        a.getDimensionPixelSize(R.styleable.OpacityBar_barLength, R.dimen.defaultBarLength);
+        a.getDimensionPixelSize(
+            R.styleable.OpacityBar_barLength, b.getDimensionPixelSize(R.dimen.defaultBarLength));
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(

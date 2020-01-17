@@ -5,6 +5,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
 
+@SuppressWarnings("unused")
 public abstract class ColorPreferenceFragmentCompat extends PreferenceFragmentCompat {
 
   @Override

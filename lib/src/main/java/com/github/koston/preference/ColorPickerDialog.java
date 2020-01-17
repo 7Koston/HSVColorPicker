@@ -12,6 +12,7 @@ import com.github.koston.preference.view.ColorPicker;
 import com.github.koston.preference.view.OpacityBar;
 import com.github.koston.preference.view.SaturationValueBar;
 
+@SuppressWarnings("unused")
 public class ColorPickerDialog extends PreferenceDialogFragmentCompat
     implements ColorPicker.OnColorChangedListener, TextWatcher {
 

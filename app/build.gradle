@@ -13,8 +13,8 @@ android {
         applicationId "com.pref.color.picker"
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
-        versionCode 10
-        versionName "1.1.0"
+        versionCode 11
+        versionName "1.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -40,5 +40,5 @@ dependencies {
     implementation deps.androidx.preference
     implementation project(':lib')
 
-    implementation "com.google.android.material:material:1.2.0-alpha01"
+    implementation "com.google.android.material:material:1.2.0-alpha02"
 }

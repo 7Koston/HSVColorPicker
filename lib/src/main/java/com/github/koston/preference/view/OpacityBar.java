@@ -33,6 +33,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.github.koston.preference.R;
 
+@SuppressWarnings("unused")
 public class OpacityBar extends View {
 
   private static final String STATE_PARENT = "parent";

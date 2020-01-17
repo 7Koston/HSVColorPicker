@@ -33,6 +33,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.github.koston.preference.R;
 
+@SuppressWarnings("unused")
 public class ColorPicker extends View {
 
   public static final int SOURCE_OUTSIDE = -2;

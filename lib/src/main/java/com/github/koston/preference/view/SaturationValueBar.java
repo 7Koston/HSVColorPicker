@@ -34,6 +34,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.github.koston.preference.R;
 
+@SuppressWarnings("unused")
 public class SaturationValueBar extends View {
 
   private static final String TAG = "SaturationValueBar";

@@ -79,28 +79,6 @@ public class SaturationValueBar extends View {
     init(null, 0);
   }
 
-  public SaturationValueBar(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    init(attrs, 0);
-  }
-
-  public SaturationValueBar(Context context, AttributeSet attrs, int defStyle) {
-    super(context, attrs, defStyle);
-    init(attrs, defStyle);
-  }
-
-  public int getType() {
-    return mBarType;
-  }
-
-  public OnOmniChangedListener getOnOmniChangedListener() {
-    return this.onOmniChangedListener;
-  }
-
-  public void setOnOmniChangedListener(OnOmniChangedListener listener) {
-    this.onOmniChangedListener = listener;
-  }
-
   private void init(AttributeSet attrs, int defStyle) {
     @SuppressLint("CustomViewStyleable")
     final TypedArray a =
@@ -154,36 +132,88 @@ public class SaturationValueBar extends View {
     mSVToPosFactor = ((float) mBarLength) / 1;
   }
 
+  public SaturationValueBar(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init(attrs, 0);
+  }
+
+  public SaturationValueBar(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+    init(attrs, defStyle);
+  }
+
+  public int getType() {
+    return mBarType;
+  }
+
+  public OnOmniChangedListener getOnOmniChangedListener() {
+    return this.onOmniChangedListener;
+  }
+
+  public void setOnOmniChangedListener(OnOmniChangedListener listener) {
+    this.onOmniChangedListener = listener;
+  }
+
+  @SuppressLint("ClickableViewAccessibility")
   @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    final int intrinsicSize = mPreferredBarLength + (mBarPointerHaloRadius * 2);
+  public boolean onTouchEvent(MotionEvent event) {
+    getParent().requestDisallowInterceptTouchEvent(true);
 
-    // Variable orientation
-    int measureSpec;
+    // Convert coordinates to our internal coordinate system
+    float dimen;
     if (mBarIsHorizontal) {
-      measureSpec = widthMeasureSpec;
+      dimen = event.getX();
     } else {
-      measureSpec = heightMeasureSpec;
-    }
-    int lengthMode = MeasureSpec.getMode(measureSpec);
-    int lengthSize = MeasureSpec.getSize(measureSpec);
-
-    int length;
-    if (lengthMode == MeasureSpec.EXACTLY) {
-      length = lengthSize;
-    } else if (lengthMode == MeasureSpec.AT_MOST) {
-      length = Math.min(intrinsicSize, lengthSize);
-    } else {
-      length = intrinsicSize;
+      dimen = event.getY();
     }
 
-    int barPointerHaloRadiusx2 = mBarPointerHaloRadius * 2;
-    mBarLength = length - barPointerHaloRadiusx2;
-    if (!mBarIsHorizontal) {
-      setMeasuredDimension(barPointerHaloRadiusx2, (mBarLength + barPointerHaloRadiusx2));
-    } else {
-      setMeasuredDimension((mBarLength + barPointerHaloRadiusx2), barPointerHaloRadiusx2);
+    switch (event.getAction()) {
+      case MotionEvent.ACTION_DOWN:
+        mIsMovingPointer = true;
+        // Check whether the user pressed on (or near) the pointer
+        if (dimen >= (mBarPointerHaloRadius) && dimen <= (mBarPointerHaloRadius + mBarLength)) {
+          mBarPointerPosition = Math.round(dimen);
+          setSVFromCoordinates(dimen);
+          invalidate();
+        }
+        break;
+      case MotionEvent.ACTION_MOVE:
+        if (mIsMovingPointer) {
+          // Move the the pointer on the bar.
+          // Touch Event happens on the bar inside the end points
+          if (dimen >= mBarPointerHaloRadius && dimen <= (mBarPointerHaloRadius + mBarLength)) {
+            mBarPointerPosition = Math.round(dimen);
+            setSVFromCoordinates(dimen);
+            setColor(mHSVColor);
+            invalidate();
+
+            // Touch event happens on the start point or to the left of it.
+          } else if (dimen < mBarPointerHaloRadius) {
+            mBarPointerPosition = mBarPointerHaloRadius;
+            setSV(0);
+            setColor(mHSVColor);
+            invalidate();
+
+            // Touch event happens to the right of the end point
+          } else if (dimen > (mBarPointerHaloRadius - mBarLength)) {
+            mBarPointerPosition = mBarPointerHaloRadius + mBarLength;
+            setSV(1);
+            setColor(mHSVColor);
+            invalidate();
+          }
+        }
+        int rgbCol = getDisplayColor(mHSVColor);
+        if (onOmniChangedListener != null && oldChangedListenerColor != rgbCol) {
+          onOmniChangedListener.onOmniChanged(rgbCol);
+          oldChangedListenerColor = rgbCol;
+        }
+
+        break;
+      case MotionEvent.ACTION_UP:
+        mIsMovingPointer = false;
+        break;
     }
+    return true;
   }
 
   @Override
@@ -269,76 +299,66 @@ public class SaturationValueBar extends View {
     canvas.drawCircle(cX, cY, mBarPointerRadius, mBarPointerPaint);
   }
 
-  @SuppressLint("ClickableViewAccessibility")
   @Override
-  public boolean onTouchEvent(MotionEvent event) {
-    getParent().requestDisallowInterceptTouchEvent(true);
+  protected Parcelable onSaveInstanceState() {
+    Parcelable superState = super.onSaveInstanceState();
 
-    // Convert coordinates to our internal coordinate system
-    float dimen;
+    Bundle state = new Bundle();
+    state.putParcelable(STATE_PARENT, superState);
+    state.putInt(STATE_ALPHA, mAlpha);
+    state.putFloatArray(STATE_COLOR, mHSVColor);
+
+    return state;
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Parcelable state) {
+    Bundle savedState = (Bundle) state;
+
+    Parcelable superState = savedState.getParcelable(STATE_PARENT);
+    super.onRestoreInstanceState(superState);
+
+    float[] floats = savedState.getFloatArray(STATE_COLOR);
+    if (floats == null) floats = new float[3];
+    initializeColor(savedState.getInt(STATE_ALPHA), floats);
+  }
+
+  @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    final int intrinsicSize = mPreferredBarLength + (mBarPointerHaloRadius * 2);
+
+    // Variable orientation
+    int measureSpec;
     if (mBarIsHorizontal) {
-      dimen = event.getX();
+      measureSpec = widthMeasureSpec;
     } else {
-      dimen = event.getY();
+      measureSpec = heightMeasureSpec;
+    }
+    int lengthMode = MeasureSpec.getMode(measureSpec);
+    int lengthSize = MeasureSpec.getSize(measureSpec);
+
+    int length;
+    if (lengthMode == MeasureSpec.EXACTLY) {
+      length = lengthSize;
+    } else if (lengthMode == MeasureSpec.AT_MOST) {
+      length = Math.min(intrinsicSize, lengthSize);
+    } else {
+      length = intrinsicSize;
     }
 
-    switch (event.getAction()) {
-      case MotionEvent.ACTION_DOWN:
-        mIsMovingPointer = true;
-        // Check whether the user pressed on (or near) the pointer
-        if (dimen >= (mBarPointerHaloRadius) && dimen <= (mBarPointerHaloRadius + mBarLength)) {
-          mBarPointerPosition = Math.round(dimen);
-          setSVFromCoordinates(dimen);
-          invalidate();
-        }
-        break;
-      case MotionEvent.ACTION_MOVE:
-        if (mIsMovingPointer) {
-          // Move the the pointer on the bar.
-          // Touch Event happens on the bar inside the end points
-          if (dimen >= mBarPointerHaloRadius && dimen <= (mBarPointerHaloRadius + mBarLength)) {
-            mBarPointerPosition = Math.round(dimen);
-            setSVFromCoordinates(dimen);
-            setColor(mHSVColor);
-            invalidate();
-
-            // Touch event happens on the start point or to the left of it.
-          } else if (dimen < mBarPointerHaloRadius) {
-            mBarPointerPosition = mBarPointerHaloRadius;
-            setSV(0);
-            setColor(mHSVColor);
-            invalidate();
-
-            // Touch event happens to the right of the end point
-          } else if (dimen > (mBarPointerHaloRadius - mBarLength)) {
-            mBarPointerPosition = mBarPointerHaloRadius + mBarLength;
-            setSV(1);
-            setColor(mHSVColor);
-            invalidate();
-          }
-        }
-        int rgbCol = getDisplayColor(mHSVColor);
-        if (onOmniChangedListener != null && oldChangedListenerColor != rgbCol) {
-          onOmniChangedListener.onOmniChanged(rgbCol);
-          oldChangedListenerColor = rgbCol;
-        }
-
-        break;
-      case MotionEvent.ACTION_UP:
-        mIsMovingPointer = false;
-        break;
+    int barPointerHaloRadiusx2 = mBarPointerHaloRadius * 2;
+    mBarLength = length - barPointerHaloRadiusx2;
+    if (!mBarIsHorizontal) {
+      setMeasuredDimension(barPointerHaloRadiusx2, (mBarLength + barPointerHaloRadiusx2));
+    } else {
+      setMeasuredDimension((mBarLength + barPointerHaloRadiusx2), barPointerHaloRadiusx2);
     }
-    return true;
   }
 
   public void initializeColor(int alpha, float[] color) {
     mAlpha = alpha;
     mBarPointerPosition = Math.round(((mSVToPosFactor * color[mBarType])) + mBarPointerHaloRadius);
     setColor(color, true);
-  }
-
-  private void setColor(float[] color) {
-    setColor(color, false);
   }
 
   private void setColor(float[] color, boolean initialize) {
@@ -372,10 +392,6 @@ public class SaturationValueBar extends View {
     invalidate();
   }
 
-  private void setSV(float omni) {
-    mHSVColor[mBarType] = omni;
-  }
-
   private int getDisplayColor(float[] color) {
     return getDisplayColor(color, color[mBarType]);
   }
@@ -385,6 +401,14 @@ public class SaturationValueBar extends View {
     System.arraycopy(color, 0, col, 0, 3);
     col[mBarType] = omni;
     return Color.HSVToColor(mAlpha, col);
+  }
+
+  private void setColor(float[] color) {
+    setColor(color, false);
+  }
+
+  private void setSV(float omni) {
+    mHSVColor[mBarType] = omni;
   }
 
   private void setSVFromCoordinates(float coord) {
@@ -402,37 +426,8 @@ public class SaturationValueBar extends View {
     mPicker = picker;
   }
 
-  @Override
-  protected Parcelable onSaveInstanceState() {
-    Parcelable superState = super.onSaveInstanceState();
-
-    Bundle state = new Bundle();
-    state.putParcelable(STATE_PARENT, superState);
-    state.putInt(STATE_ALPHA, mAlpha);
-    state.putFloatArray(STATE_COLOR, mHSVColor);
-
-    return state;
-  }
-
-  @Override
-  protected void onRestoreInstanceState(Parcelable state) {
-    Bundle savedState = (Bundle) state;
-
-    Parcelable superState = savedState.getParcelable(STATE_PARENT);
-    super.onRestoreInstanceState(superState);
-
-    float[] floats = savedState.getFloatArray(STATE_COLOR);
-    if (floats == null) floats = new float[3];
-    initializeColor(savedState.getInt(STATE_ALPHA), floats);
-  }
-
   private void logHSV(String source, float[] mHSVColor) {
     Log.d(TAG, source + ": " + mHSVColor[0] + "/" + mHSVColor[1] + "/" + mHSVColor[2]);
-  }
-
-  public interface OnOmniChangedListener {
-
-    void onOmniChanged(int omni);
   }
 
   public void setBarType(int type) {
@@ -459,5 +454,10 @@ public class SaturationValueBar extends View {
   public void setBarPointerHaloColor(int barPointerHaloColor) {
     this.mBarPointerHaloColor = barPointerHaloColor;
     mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
+  }
+
+  public interface OnOmniChangedListener {
+
+    void onOmniChanged(int omni);
   }
 }

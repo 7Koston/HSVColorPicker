@@ -8,9 +8,10 @@ import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    SharedPreferences prefs = PreferenceManager
-        .getDefaultSharedPreferences(getApplicationContext());
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    SharedPreferences prefs =
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     if (prefs.getBoolean("theme", false)) {
       getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     } else {

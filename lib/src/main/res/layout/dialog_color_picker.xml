@@ -3,8 +3,8 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="wrap_content"
-  android:focusableInTouchMode="true"
   android:layout_height="wrap_content"
+  android:focusableInTouchMode="true"
   android:orientation="vertical">
 
   <com.github.koston.preference.view.ColorPicker
@@ -12,43 +12,43 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"/>
+    android:layout_centerHorizontal="true" />
 
   <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/saturationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
     android:layout_below="@+id/hue"
     android:layout_centerHorizontal="true"
+    android:layout_margin="6dp"
     app:barOrientationHorizontal="true"
-    app:barType="saturation"/>
+    app:barType="saturation" />
 
   <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/valueBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
     android:layout_below="@+id/saturationBar"
     android:layout_centerHorizontal="true"
+    android:layout_margin="6dp"
     app:barOrientationHorizontal="true"
-    app:barType="value"/>
+    app:barType="value" />
 
   <com.github.koston.preference.view.OpacityBar
     android:id="@+id/opacityBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
     android:layout_below="@+id/valueBar"
     android:layout_centerHorizontal="true"
-    app:barOrientationHorizontal="true"/>
+    android:layout_margin="6dp"
+    app:barOrientationHorizontal="true" />
 
   <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
     android:layout_below="@+id/opacityBar"
     android:layout_centerHorizontal="true"
+    android:layout_margin="6dp"
     android:orientation="horizontal">
 
     <TextView
@@ -56,7 +56,7 @@
       android:layout_height="wrap_content"
       android:text="@string/hex_placeholder"
       android:textColor="?android:attr/textColorPrimary"
-      android:textSize="18sp"/>
+      android:textSize="18sp" />
 
     <EditText
       android:id="@+id/hex"
@@ -73,7 +73,7 @@
       android:maxLines="1"
       android:textColor="?android:attr/textColorPrimary"
       android:textSize="18sp"
-      tools:ignore="UnusedAttribute"/>
+      tools:ignore="UnusedAttribute" />
   </LinearLayout>
 
 

@@ -102,11 +102,12 @@ public class SaturationValueBar extends View {
   }
 
   private void init(AttributeSet attrs, int defStyle) {
+    @SuppressLint("CustomViewStyleable")
     final TypedArray a =
-        getContext().obtainStyledAttributes(attrs, R.styleable.SaturationValueBar, defStyle, 0);
+        getContext().obtainStyledAttributes(attrs, R.styleable.ColorPickerBars, defStyle, 0);
     final Resources r = getContext().getResources();
 
-    int type = a.getInt(R.styleable.SaturationValueBar_barType, ColorPicker.SOURCE_OUTSIDE);
+    int type = a.getInt(R.styleable.ColorPickerBars_barType, ColorPicker.SOURCE_OUTSIDE);
     if (type == ColorPicker.TYPE_SATURATION || type == ColorPicker.TYPE_VALUE) {
       mBarType = type;
     } else {
@@ -115,25 +116,26 @@ public class SaturationValueBar extends View {
 
     mBarThickness =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barThickness,
+            R.styleable.ColorPickerBars_barThickness,
             r.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barLength,
+            R.styleable.ColorPickerBars_barLength,
             r.getDimensionPixelSize(R.dimen.defaultBarLength));
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barPointerRadius,
+            R.styleable.ColorPickerBars_barPointerRadius,
             r.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
     mBarPointerHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barPointerHaloRadius,
+            R.styleable.ColorPickerBars_barPointerHaloRadius,
             r.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
     mBarPointerHaloColor =
         a.getColor(
-            R.styleable.ColorPicker_pointerHaloColor, r.getColor(R.color.defaultPointerHaloColor));
-    mBarIsHorizontal = a.getBoolean(R.styleable.SaturationValueBar_barOrientationHorizontal, true);
+            R.styleable.ColorPickerBars_barPointerHaloColor,
+            r.getColor(R.color.defaultPointerHaloColor));
+    mBarIsHorizontal = a.getBoolean(R.styleable.ColorPickerBars_barOrientationHorizontal, true);
 
     a.recycle();
 
@@ -218,7 +220,7 @@ public class SaturationValueBar extends View {
               0,
               x1,
               y1,
-              new int[]{getDisplayColor(mHSVColor, 0), getDisplayColor(mHSVColor, 1)},
+              new int[] {getDisplayColor(mHSVColor, 0), getDisplayColor(mHSVColor, 1)},
               null,
               Shader.TileMode.CLAMP);
     } else {
@@ -228,7 +230,7 @@ public class SaturationValueBar extends View {
               0,
               x1,
               y1,
-              new int[]{Color.WHITE, 0xff81ff00},
+              new int[] {Color.WHITE, 0xff81ff00},
               null,
               Shader.TileMode.CLAMP);
       Color.colorToHSV(0xff81ff00, mHSVColor);
@@ -356,7 +358,7 @@ public class SaturationValueBar extends View {
             0,
             x1,
             y1,
-            new int[]{getDisplayColor(color, 0), getDisplayColor(color, 1)},
+            new int[] {getDisplayColor(color, 0), getDisplayColor(color, 1)},
             null,
             Shader.TileMode.CLAMP);
     mBarPaint.setShader(shader);
@@ -419,7 +421,9 @@ public class SaturationValueBar extends View {
     Parcelable superState = savedState.getParcelable(STATE_PARENT);
     super.onRestoreInstanceState(superState);
 
-    initializeColor(savedState.getInt(STATE_ALPHA), savedState.getFloatArray(STATE_COLOR));
+    float[] floats = savedState.getFloatArray(STATE_COLOR);
+    if (floats == null) floats = new float[3];
+    initializeColor(savedState.getInt(STATE_ALPHA), floats);
   }
 
   private void logHSV(String source, float[] mHSVColor) {

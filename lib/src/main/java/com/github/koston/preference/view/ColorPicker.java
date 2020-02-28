@@ -51,8 +51,8 @@ public class ColorPicker extends View {
   private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
   private static final int[] COLORS =
-      new int[]{
-          0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000
+      new int[] {
+        0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000
       };
 
   private Paint mColorWheelPaint;
@@ -65,7 +65,7 @@ public class ColorPicker extends View {
   private int mColorCenterHaloRadius;
   private int mColorPointerRadius;
   private int mColorPointerHaloRadius;
-  private int mColorPointerHaloColor;
+  private int mColorPointersHaloColor;
 
   private int mPreferredColorWheelRadius;
   private int mPreferredColorCenterRadius;
@@ -142,11 +142,11 @@ public class ColorPicker extends View {
 
     mColorWheelThickness =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_wheelThickness,
+            R.styleable.ColorPicker_hueWheelThickness,
             r.getDimensionPixelSize(R.dimen.defaultWheelThickness));
     mColorWheelRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_wheelRadius,
+            R.styleable.ColorPicker_hueWheelRadius,
             r.getDimensionPixelSize(R.dimen.defaultWheelRadius));
     mPreferredColorWheelRadius = mColorWheelRadius;
     mColorCenterRadius =
@@ -161,15 +161,15 @@ public class ColorPicker extends View {
     mPreferredColorCenterHaloRadius = mColorCenterHaloRadius;
     mColorPointerRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_pointerRadius,
+            R.styleable.ColorPicker_huePointerRadius,
             r.getDimensionPixelSize(R.dimen.defaultPointerRadius));
     mColorPointerHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.ColorPicker_pointerHaloRadius,
+            R.styleable.ColorPicker_huePointerHaloRadius,
             r.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
-    mColorPointerHaloColor =
+    mColorPointersHaloColor =
         a.getColor(
-            R.styleable.ColorPicker_pointerHaloColor, r.getColor(R.color.defaultPointerHaloColor));
+            R.styleable.ColorPicker_pointersHaloColor, r.getColor(R.color.defaultPointerHaloColor));
 
     a.recycle();
 
@@ -183,7 +183,7 @@ public class ColorPicker extends View {
     mColorWheelPaint.setStrokeWidth(mColorWheelThickness);
 
     mPointerHaloPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    mPointerHaloPaint.setColor(mColorPointerHaloColor);
+    mPointerHaloPaint.setColor(mColorPointersHaloColor);
 
     mPointerColor = new Paint(Paint.ANTI_ALIAS_FLAG);
     mPointerColor.setColor(setHueFromAngleRGB(mAngle, COLORS[0]));
@@ -301,7 +301,7 @@ public class ColorPicker extends View {
     float[] hue = {0, 0, 0};
     Color.colorToHSV(color, hsv);
     Color.colorToHSV(colorForHue, hue);
-    return Color.HSVToColor(Color.alpha(color), new float[]{hue[0], hsv[1], hsv[2]});
+    return Color.HSVToColor(Color.alpha(color), new float[] {hue[0], hsv[1], hsv[2]});
   }
 
   private int setHueFromAngleRGB(float angle, int prevColor) {
@@ -415,16 +415,19 @@ public class ColorPicker extends View {
           invalidate();
         }
         // Check whether the user pressed anywhere on the wheel.
-        else if (Math.sqrt(x * x + y * y) <= mColorWheelRadius + mColorPointerHaloRadius
-            && Math.sqrt(x * x + y * y) >= mColorWheelRadius - mColorPointerHaloRadius
-            && mTouchAnywhereOnColorWheelEnabled) {
-          mUserIsMovingPointer = true;
-          invalidate();
-        }
-        // If user did not press pointer or center, report event not handled
         else {
-          getParent().requestDisallowInterceptTouchEvent(false);
-          return false;
+          double sqrt = Math.sqrt(x * x + y * y);
+          if (sqrt <= mColorWheelRadius + mColorPointerHaloRadius
+              && sqrt >= mColorWheelRadius - mColorPointerHaloRadius
+              && mTouchAnywhereOnColorWheelEnabled) {
+            mUserIsMovingPointer = true;
+            invalidate();
+          }
+          // If user did not press pointer or center, report event not handled
+          else {
+            getParent().requestDisallowInterceptTouchEvent(false);
+            return false;
+          }
         }
         break;
       case MotionEvent.ACTION_MOVE:
@@ -468,7 +471,7 @@ public class ColorPicker extends View {
     float x = (float) (mColorWheelRadius * Math.cos(angle));
     float y = (float) (mColorWheelRadius * Math.sin(angle));
 
-    return new float[]{x, y};
+    return new float[] {x, y};
   }
 
   public void addOpacityBar(OpacityBar bar) {
@@ -625,7 +628,7 @@ public class ColorPicker extends View {
   }
 
   public void setColorPointerHaloColor(int colorPointerHaloColor) {
-    this.mColorPointerHaloColor = colorPointerHaloColor;
-    mPointerHaloPaint.setColor(mColorPointerHaloColor);
+    this.mColorPointersHaloColor = colorPointerHaloColor;
+    mPointerHaloPaint.setColor(mColorPointersHaloColor);
   }
 }

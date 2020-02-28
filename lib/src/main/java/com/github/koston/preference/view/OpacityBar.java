@@ -95,30 +95,32 @@ public class OpacityBar extends View {
   }
 
   private void init(AttributeSet attrs, int defStyle) {
+    @SuppressLint("CustomViewStyleable")
     final TypedArray a =
-        getContext().obtainStyledAttributes(attrs, R.styleable.OpacityBar, defStyle, 0);
+        getContext().obtainStyledAttributes(attrs, R.styleable.ColorPickerBars, defStyle, 0);
     final Resources b = getContext().getResources();
 
     mBarThickness =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_barThickness,
+            R.styleable.ColorPickerBars_barThickness,
             b.getDimensionPixelSize(R.dimen.defaultBarThickness));
     mBarLength =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_barLength, b.getDimensionPixelSize(R.dimen.defaultBarLength));
+            R.styleable.ColorPickerBars_barLength, b.getDimensionPixelSize(R.dimen.defaultBarLength));
     mPreferredBarLength = mBarLength;
     mBarPointerRadius =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_barPointerRadius,
+            R.styleable.ColorPickerBars_barPointerRadius,
             b.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
     mBarPointerHaloRadius =
         a.getDimensionPixelSize(
-            R.styleable.OpacityBar_barPointerHaloRadius,
+            R.styleable.ColorPickerBars_barPointerHaloRadius,
             b.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
     mBarPointerHaloColor =
         a.getColor(
-            R.styleable.ColorPicker_pointerHaloColor, b.getColor(R.color.defaultPointerHaloColor));
-    mBarIsHorizontal = a.getBoolean(R.styleable.OpacityBar_barOrientationHorizontal, true);
+            R.styleable.ColorPickerBars_barPointerHaloColor,
+            b.getColor(R.color.defaultPointerHaloColor));
+    mBarIsHorizontal = a.getBoolean(R.styleable.ColorPickerBars_barOrientationHorizontal, true);
 
     a.recycle();
 
@@ -203,7 +205,7 @@ public class OpacityBar extends View {
               0,
               x1,
               y1,
-              new int[]{Color.HSVToColor(0x00, mHSVColor), Color.HSVToColor(0xFF, mHSVColor)},
+              new int[] {Color.HSVToColor(0x00, mHSVColor), Color.HSVToColor(0xFF, mHSVColor)},
               null,
               Shader.TileMode.CLAMP);
     } else {
@@ -213,7 +215,7 @@ public class OpacityBar extends View {
               0,
               x1,
               y1,
-              new int[]{0x0081ff00, 0xff81ff00},
+              new int[] {0x0081ff00, 0xff81ff00},
               null,
               Shader.TileMode.CLAMP);
       Color.colorToHSV(0xff81ff00, mHSVColor);
@@ -333,7 +335,7 @@ public class OpacityBar extends View {
             0,
             x1,
             y1,
-            new int[]{lowerBoundColor(mHSVColor), mColor},
+            new int[] {lowerBoundColor(mHSVColor), mColor},
             null,
             Shader.TileMode.CLAMP);
     mBarPaint.setShader(shader);

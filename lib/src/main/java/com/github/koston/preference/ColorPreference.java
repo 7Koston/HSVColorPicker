@@ -8,6 +8,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceViewHolder;
 
@@ -67,7 +68,7 @@ public class ColorPreference extends DialogPreference {
 
   private void init(Context context, AttributeSet attrs) {
     Resources b = context.getResources();
-    mDrawable = b.getDrawable(R.drawable.circle);
+    mDrawable = ResourcesCompat.getDrawable(b, R.drawable.circle, context.getTheme());
 
     if (attrs != null) {
       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorPreference);
@@ -84,11 +85,11 @@ public class ColorPreference extends DialogPreference {
               b.getDimensionPixelSize(R.dimen.defaultWheelRadius));
       colorCenterRadius =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_centerCircleRadius,
+              R.styleable.ColorPreference_hueCenterCircleRadius,
               b.getDimensionPixelSize(R.dimen.defaultCenterRadius));
       colorCenterHaloRadius =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_centerCircleHaloRadius,
+              R.styleable.ColorPreference_hueCenterCircleHaloRadius,
               b.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
       colorPointerRadius =
           a.getDimensionPixelSize(

@@ -51,8 +51,8 @@ public class ColorPicker extends View {
   private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
   private static final int[] COLORS =
-      new int[]{
-          0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000
+      new int[] {
+        0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000
       };
 
   private Paint mColorWheelPaint;
@@ -301,7 +301,7 @@ public class ColorPicker extends View {
     float[] hue = {0, 0, 0};
     Color.colorToHSV(color, hsv);
     Color.colorToHSV(colorForHue, hue);
-    return Color.HSVToColor(Color.alpha(color), new float[]{hue[0], hsv[1], hsv[2]});
+    return Color.HSVToColor(Color.alpha(color), new float[] {hue[0], hsv[1], hsv[2]});
   }
 
   private int setHueFromAngleRGB(float angle, int prevColor) {
@@ -415,16 +415,19 @@ public class ColorPicker extends View {
           invalidate();
         }
         // Check whether the user pressed anywhere on the wheel.
-        else if (Math.sqrt(x * x + y * y) <= mColorWheelRadius + mColorPointerHaloRadius
-            && Math.sqrt(x * x + y * y) >= mColorWheelRadius - mColorPointerHaloRadius
-            && mTouchAnywhereOnColorWheelEnabled) {
-          mUserIsMovingPointer = true;
-          invalidate();
-        }
-        // If user did not press pointer or center, report event not handled
         else {
-          getParent().requestDisallowInterceptTouchEvent(false);
-          return false;
+          double sqrt = Math.sqrt(x * x + y * y);
+          if (sqrt <= mColorWheelRadius + mColorPointerHaloRadius
+              && sqrt >= mColorWheelRadius - mColorPointerHaloRadius
+              && mTouchAnywhereOnColorWheelEnabled) {
+            mUserIsMovingPointer = true;
+            invalidate();
+          }
+          // If user did not press pointer or center, report event not handled
+          else {
+            getParent().requestDisallowInterceptTouchEvent(false);
+            return false;
+          }
         }
         break;
       case MotionEvent.ACTION_MOVE:
@@ -468,7 +471,7 @@ public class ColorPicker extends View {
     float x = (float) (mColorWheelRadius * Math.cos(angle));
     float y = (float) (mColorWheelRadius * Math.sin(angle));
 
-    return new float[]{x, y};
+    return new float[] {x, y};
   }
 
   public void addOpacityBar(OpacityBar bar) {

@@ -2,62 +2,62 @@
 <resources>
 
   <declare-styleable name="ColorPicker">
-    <attr format="dimension" name="wheelRadius"/>
-    <attr format="dimension" name="wheelThickness"/>
-    <attr format="dimension" name="centerCircleRadius"/>
-    <attr format="dimension" name="centerCircleHaloRadius"/>
-    <attr format="dimension" name="pointerRadius"/>
-    <attr format="dimension" name="pointerHaloRadius"/>
-    <attr format="color" name="pointerHaloColor"/>
+    <attr name="wheelRadius" format="dimension" />
+    <attr name="wheelThickness" format="dimension" />
+    <attr name="centerCircleRadius" format="dimension" />
+    <attr name="centerCircleHaloRadius" format="dimension" />
+    <attr name="pointerRadius" format="dimension" />
+    <attr name="pointerHaloRadius" format="dimension" />
+    <attr name="pointerHaloColor" format="color" />
   </declare-styleable>
 
   <declare-styleable name="ColorBars">
-    <attr format="dimension" name="barThickness"/>
-    <attr format="dimension" name="barLength"/>
-    <attr format="dimension" name="barPointerRadius"/>
-    <attr format="dimension" name="barPointerHaloRadius"/>
-    <attr format="color" name="barPointerHaloColor"/>
-    <attr format="boolean" name="barOrientationHorizontal"/>
+    <attr name="barThickness" format="dimension" />
+    <attr name="barLength" format="dimension" />
+    <attr name="barPointerRadius" format="dimension" />
+    <attr name="barPointerHaloRadius" format="dimension" />
+    <attr name="barPointerHaloColor" format="color" />
+    <attr name="barOrientationHorizontal" format="boolean" />
   </declare-styleable>
 
   <declare-styleable name="OpacityBar">
-    <attr name="barThickness"/>
-    <attr name="barLength"/>
-    <attr name="barPointerRadius"/>
-    <attr name="barPointerHaloRadius"/>
-    <attr name="barOrientationHorizontal"/>
-    <attr name="barPointerHaloColor"/>
+    <attr name="barThickness" />
+    <attr name="barLength" />
+    <attr name="barPointerRadius" />
+    <attr name="barPointerHaloRadius" />
+    <attr name="barOrientationHorizontal" />
+    <attr name="barPointerHaloColor" />
   </declare-styleable>
 
   <declare-styleable name="SaturationValueBar">
     <attr name="barType">
-      <enum name="saturation" value="1"/>
-      <enum name="value" value="2"/>
+      <enum name="saturation" value="1" />
+      <enum name="value" value="2" />
     </attr>
-    <attr name="barThickness"/>
-    <attr name="barLength"/>
-    <attr name="barPointerRadius"/>
-    <attr name="barPointerHaloRadius"/>
-    <attr name="barOrientationHorizontal"/>
-    <attr name="barPointerHaloColor"/>
+    <attr name="barThickness" />
+    <attr name="barLength" />
+    <attr name="barPointerRadius" />
+    <attr name="barPointerHaloRadius" />
+    <attr name="barOrientationHorizontal" />
+    <attr name="barPointerHaloColor" />
   </declare-styleable>
 
   <declare-styleable name="ColorPreference">
-    <attr format="boolean|reference" name="indicatorColorPreview"/>
+    <attr name="indicatorColorPreview" format="boolean|reference" />
     <!--ColorPicker-->
-    <attr name="hueWheelRadius"/>
-    <attr name="hueWheelThickness"/>
-    <attr name="centerCircleRadius"/>
-    <attr name="centerCircleHaloRadius"/>
-    <attr name="huePointerRadius"/>
-    <attr name="huePointerHaloRadius"/>
+    <attr name="hueWheelRadius" format="dimension" />
+    <attr name="hueWheelThickness" format="dimension" />
+    <attr name="hueCenterCircleRadius" format="dimension" />
+    <attr name="hueCenterCircleHaloRadius" format="dimension" />
+    <attr name="huePointerRadius" format="dimension" />
+    <attr name="huePointerHaloRadius" format="dimension" />
     <!--ColorBars-->
-    <attr name="barThickness"/>
-    <attr name="barLength"/>
-    <attr name="barPointerRadius"/>
-    <attr name="barPointerHaloRadius"/>
+    <attr name="barThickness" />
+    <attr name="barLength" />
+    <attr name="barPointerRadius" />
+    <attr name="barPointerHaloRadius" />
     <!--Both-->
-    <attr name="pointersHaloColor"/>
+    <attr name="pointersHaloColor" format="color" />
   </declare-styleable>
 
 </resources>

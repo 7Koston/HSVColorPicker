@@ -11,11 +11,11 @@ public abstract class ColorPreferenceFragmentCompat extends PreferenceFragmentCo
   @Override
   public void onDisplayPreferenceDialog(Preference preference) {
     PreferenceDialogFragmentCompat dialogFragment = null;
-    FragmentManager manager = getFragmentManager();
+    FragmentManager manager = getParentFragmentManager();
     if (preference instanceof ColorPreference) {
       dialogFragment = ColorPickerDialog.newInstance(preference.getKey());
     }
-    if (dialogFragment != null && manager != null) {
+    if (dialogFragment != null) {
       dialogFragment.setTargetFragment(this, 0);
       dialogFragment.show(manager, ColorPickerDialog.class.getName());
     } else {

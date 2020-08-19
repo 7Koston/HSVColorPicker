@@ -68,7 +68,6 @@
       android:hint="@string/hex"
       android:imeOptions="actionDone"
       android:inputType="textNoSuggestions"
-      android:labelFor="@+id/hex"
       android:maxLength="8"
       android:maxLines="1"
       android:textColor="?android:attr/textColorPrimary"

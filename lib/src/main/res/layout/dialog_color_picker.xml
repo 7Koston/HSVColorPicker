@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="wrap_content"
+  android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:focusableInTouchMode="true"
+  android:gravity="center_horizontal"
   android:orientation="vertical">
 
   <com.github.koston.preference.view.ColorPicker
     android:id="@+id/hue"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true" />
+    android:layout_height="wrap_content" />
 
   <com.github.koston.preference.view.SaturationValueBar
     android:id="@+id/saturationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/hue"
-    android:layout_centerHorizontal="true"
     android:layout_margin="6dp"
     app:barOrientationHorizontal="true"
     app:barType="saturation" />
@@ -28,8 +25,6 @@
     android:id="@+id/valueBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/saturationBar"
-    android:layout_centerHorizontal="true"
     android:layout_margin="6dp"
     app:barOrientationHorizontal="true"
     app:barType="value" />
@@ -38,16 +33,12 @@
     android:id="@+id/opacityBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/valueBar"
-    android:layout_centerHorizontal="true"
     android:layout_margin="6dp"
     app:barOrientationHorizontal="true" />
 
   <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/opacityBar"
-    android:layout_centerHorizontal="true"
     android:layout_margin="6dp"
     android:orientation="horizontal">
 
@@ -76,4 +67,4 @@
   </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

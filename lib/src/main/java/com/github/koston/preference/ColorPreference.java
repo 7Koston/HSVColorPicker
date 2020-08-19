@@ -75,19 +75,19 @@ public class ColorPreference extends DialogPreference {
 
       barThickness =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barThickness,
+              R.styleable.ColorPreference_barsThickness,
               b.getDimensionPixelSize(R.dimen.defaultBarThickness));
       barLength =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barLength,
+              R.styleable.ColorPreference_barsLength,
               b.getDimensionPixelSize(R.dimen.defaultBarLength));
       barPointerRadius =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barPointerRadius,
+              R.styleable.ColorPreference_barsPointerRadius,
               b.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
       barPointerHaloRadius =
           a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barPointerHaloRadius,
+              R.styleable.ColorPreference_barsPointerHaloRadius,
               b.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
       pointersHaloColor =
           a.getColor(

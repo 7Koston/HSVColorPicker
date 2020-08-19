@@ -79,6 +79,59 @@ public class SaturationValueBar extends View {
     init(null, 0);
   }
 
+  private void init(AttributeSet attrs, int defStyle) {
+    @SuppressLint("CustomViewStyleable")
+    final TypedArray a =
+        getContext().obtainStyledAttributes(attrs, R.styleable.ColorPickerBars, defStyle, 0);
+    final Resources r = getContext().getResources();
+
+    int type = a.getInt(R.styleable.ColorPickerBars_barType, ColorPicker.SOURCE_OUTSIDE);
+    if (type == ColorPicker.TYPE_SATURATION || type == ColorPicker.TYPE_VALUE) {
+      mBarType = type;
+    } else {
+      Log.w(TAG, "assign 'bar_type' in XML Layout, SaturationValue otherwise inoperable");
+    }
+
+    mBarThickness =
+        a.getDimensionPixelSize(
+            R.styleable.ColorPickerBars_barThickness,
+            r.getDimensionPixelSize(R.dimen.defaultBarThickness));
+    mBarLength =
+        a.getDimensionPixelSize(
+            R.styleable.ColorPickerBars_barLength,
+            r.getDimensionPixelSize(R.dimen.defaultBarLength));
+    mPreferredBarLength = mBarLength;
+    mBarPointerRadius =
+        a.getDimensionPixelSize(
+            R.styleable.ColorPickerBars_barPointerRadius,
+            r.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
+    mBarPointerHaloRadius =
+        a.getDimensionPixelSize(
+            R.styleable.ColorPickerBars_barPointerHaloRadius,
+            r.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
+    mBarPointerHaloColor =
+        a.getColor(
+            R.styleable.ColorPickerBars_barPointerHaloColor,
+            r.getColor(R.color.defaultPointerHaloColor));
+    mBarIsHorizontal = a.getBoolean(R.styleable.ColorPickerBars_barOrientationHorizontal, true);
+
+    a.recycle();
+
+    mBarPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    mBarPaint.setShader(shader);
+
+    mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
+
+    mBarPointerHaloPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
+
+    mBarPointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    mBarPointerPaint.setColor(0xff81ff00);
+
+    mPosToSVFactor = 1 / ((float) mBarLength);
+    mSVToPosFactor = ((float) mBarLength) / 1;
+  }
+
   public SaturationValueBar(Context context, AttributeSet attrs) {
     super(context, attrs);
     init(attrs, 0);
@@ -99,172 +152,6 @@ public class SaturationValueBar extends View {
 
   public void setOnOmniChangedListener(OnOmniChangedListener listener) {
     this.onOmniChangedListener = listener;
-  }
-
-  private void init(AttributeSet attrs, int defStyle) {
-    final TypedArray a =
-        getContext().obtainStyledAttributes(attrs, R.styleable.SaturationValueBar, defStyle, 0);
-    final Resources r = getContext().getResources();
-
-    int type = a.getInt(R.styleable.SaturationValueBar_barType, ColorPicker.SOURCE_OUTSIDE);
-    if (type == ColorPicker.TYPE_SATURATION || type == ColorPicker.TYPE_VALUE) {
-      mBarType = type;
-    } else {
-      Log.w(TAG, "assign 'bar_type' in XML Layout, SaturationValue otherwise inoperable");
-    }
-
-    mBarThickness =
-        a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barThickness,
-            r.getDimensionPixelSize(R.dimen.defaultBarThickness));
-    mBarLength =
-        a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barLength,
-            r.getDimensionPixelSize(R.dimen.defaultBarLength));
-    mPreferredBarLength = mBarLength;
-    mBarPointerRadius =
-        a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barPointerRadius,
-            r.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
-    mBarPointerHaloRadius =
-        a.getDimensionPixelSize(
-            R.styleable.SaturationValueBar_barPointerHaloRadius,
-            r.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
-    mBarPointerHaloColor =
-        a.getColor(
-            R.styleable.ColorPicker_pointerHaloColor, r.getColor(R.color.defaultPointerHaloColor));
-    mBarIsHorizontal = a.getBoolean(R.styleable.SaturationValueBar_barOrientationHorizontal, true);
-
-    a.recycle();
-
-    mBarPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    mBarPaint.setShader(shader);
-
-    mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
-
-    mBarPointerHaloPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
-
-    mBarPointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    mBarPointerPaint.setColor(0xff81ff00);
-
-    mPosToSVFactor = 1 / ((float) mBarLength);
-    mSVToPosFactor = ((float) mBarLength) / 1;
-  }
-
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    final int intrinsicSize = mPreferredBarLength + (mBarPointerHaloRadius * 2);
-
-    // Variable orientation
-    int measureSpec;
-    if (mBarIsHorizontal) {
-      measureSpec = widthMeasureSpec;
-    } else {
-      measureSpec = heightMeasureSpec;
-    }
-    int lengthMode = MeasureSpec.getMode(measureSpec);
-    int lengthSize = MeasureSpec.getSize(measureSpec);
-
-    int length;
-    if (lengthMode == MeasureSpec.EXACTLY) {
-      length = lengthSize;
-    } else if (lengthMode == MeasureSpec.AT_MOST) {
-      length = Math.min(intrinsicSize, lengthSize);
-    } else {
-      length = intrinsicSize;
-    }
-
-    int barPointerHaloRadiusx2 = mBarPointerHaloRadius * 2;
-    mBarLength = length - barPointerHaloRadiusx2;
-    if (!mBarIsHorizontal) {
-      setMeasuredDimension(barPointerHaloRadiusx2, (mBarLength + barPointerHaloRadiusx2));
-    } else {
-      setMeasuredDimension((mBarLength + barPointerHaloRadiusx2), barPointerHaloRadiusx2);
-    }
-  }
-
-  @Override
-  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    super.onSizeChanged(w, h, oldw, oldh);
-
-    // Fill the rectangle instance based on orientation
-    int x1, y1;
-    if (mBarIsHorizontal) {
-      x1 = (mBarLength + mBarPointerHaloRadius);
-      y1 = mBarThickness;
-      mBarLength = w - (mBarPointerHaloRadius * 2);
-      mBarRect.set(
-          mBarPointerHaloRadius,
-          (mBarPointerHaloRadius - (mBarThickness / 2f)),
-          (mBarLength + (mBarPointerHaloRadius)),
-          (mBarPointerHaloRadius + (mBarThickness / 2f)));
-    } else {
-      x1 = mBarThickness;
-      y1 = (mBarLength + mBarPointerHaloRadius);
-      mBarLength = h - (mBarPointerHaloRadius * 2);
-      mBarRect.set(
-          (mBarPointerHaloRadius - (mBarThickness / 2f)),
-          mBarPointerHaloRadius,
-          (mBarPointerHaloRadius + (mBarThickness / 2f)),
-          (mBarLength + (mBarPointerHaloRadius)));
-    }
-
-    // Update variables that depend of mBarLength.
-    if (!isInEditMode()) {
-      shader =
-          new LinearGradient(
-              mBarPointerHaloRadius,
-              0,
-              x1,
-              y1,
-              new int[]{getDisplayColor(mHSVColor, 0), getDisplayColor(mHSVColor, 1)},
-              null,
-              Shader.TileMode.CLAMP);
-    } else {
-      shader =
-          new LinearGradient(
-              mBarPointerHaloRadius,
-              0,
-              x1,
-              y1,
-              new int[]{Color.WHITE, 0xff81ff00},
-              null,
-              Shader.TileMode.CLAMP);
-      Color.colorToHSV(0xff81ff00, mHSVColor);
-    }
-
-    mBarPaint.setShader(shader);
-    mPosToSVFactor = 1 / ((float) mBarLength);
-    mSVToPosFactor = ((float) mBarLength) / 1;
-
-    if (!isInEditMode()) {
-      mBarPointerPosition =
-          Math.round((mSVToPosFactor * mHSVColor[mBarType]) + mBarPointerHaloRadius);
-    } else {
-      mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
-    }
-  }
-
-  @Override
-  protected void onDraw(Canvas canvas) {
-    // Draw the bar.
-    canvas.drawRect(mBarRect, mBarPaint);
-
-    // Calculate the center of the pointer.
-    int cX, cY;
-    if (mBarIsHorizontal) {
-      cX = mBarPointerPosition;
-      cY = mBarPointerHaloRadius;
-    } else {
-      cX = mBarPointerHaloRadius;
-      cY = mBarPointerPosition;
-    }
-
-    // Draw the pointer halo.
-    canvas.drawCircle(cX, cY, mBarPointerHaloRadius, mBarPointerHaloPaint);
-    // Draw the pointer.
-    canvas.drawCircle(cX, cY, mBarPointerRadius, mBarPointerPaint);
   }
 
   @SuppressLint("ClickableViewAccessibility")
@@ -329,75 +216,87 @@ public class SaturationValueBar extends View {
     return true;
   }
 
-  public void initializeColor(int alpha, float[] color) {
-    mAlpha = alpha;
-    mBarPointerPosition = Math.round(((mSVToPosFactor * color[mBarType])) + mBarPointerHaloRadius);
-    setColor(color, true);
-  }
+  @Override
+  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    super.onSizeChanged(w, h, oldw, oldh);
 
-  private void setColor(float[] color) {
-    setColor(color, false);
-  }
-
-  private void setColor(float[] color, boolean initialize) {
+    // Fill the rectangle instance based on orientation
     int x1, y1;
     if (mBarIsHorizontal) {
       x1 = (mBarLength + mBarPointerHaloRadius);
       y1 = mBarThickness;
+      mBarLength = w - (mBarPointerHaloRadius * 2);
+      mBarRect.set(
+          mBarPointerHaloRadius,
+          (mBarPointerHaloRadius - (mBarThickness / 2f)),
+          (mBarLength + (mBarPointerHaloRadius)),
+          (mBarPointerHaloRadius + (mBarThickness / 2f)));
     } else {
       x1 = mBarThickness;
       y1 = (mBarLength + mBarPointerHaloRadius);
+      mBarLength = h - (mBarPointerHaloRadius * 2);
+      mBarRect.set(
+          (mBarPointerHaloRadius - (mBarThickness / 2f)),
+          mBarPointerHaloRadius,
+          (mBarPointerHaloRadius + (mBarThickness / 2f)),
+          (mBarLength + (mBarPointerHaloRadius)));
     }
-    System.arraycopy(color, 0, mHSVColor, 0, 3);
 
-    shader =
-        new LinearGradient(
-            mBarPointerHaloRadius,
-            0,
-            x1,
-            y1,
-            new int[]{getDisplayColor(color, 0), getDisplayColor(color, 1)},
-            null,
-            Shader.TileMode.CLAMP);
+    // Update variables that depend of mBarLength.
+    if (!isInEditMode()) {
+      shader =
+          new LinearGradient(
+              mBarPointerHaloRadius,
+              0,
+              x1,
+              y1,
+              new int[] {getDisplayColor(mHSVColor, 0), getDisplayColor(mHSVColor, 1)},
+              null,
+              Shader.TileMode.CLAMP);
+    } else {
+      shader =
+          new LinearGradient(
+              mBarPointerHaloRadius,
+              0,
+              x1,
+              y1,
+              new int[] {Color.WHITE, 0xff81ff00},
+              null,
+              Shader.TileMode.CLAMP);
+      Color.colorToHSV(0xff81ff00, mHSVColor);
+    }
+
     mBarPaint.setShader(shader);
+    mPosToSVFactor = 1 / ((float) mBarLength);
+    mSVToPosFactor = ((float) mBarLength) / 1;
 
-    mBarPointerPaint.setColor(getDisplayColor(color));
-    if (!initialize) {
-      if (mPicker != null) {
-        mPicker.setColor(mAlpha, mHSVColor, mBarType);
-      }
+    if (!isInEditMode()) {
+      mBarPointerPosition =
+          Math.round((mSVToPosFactor * mHSVColor[mBarType]) + mBarPointerHaloRadius);
+    } else {
+      mBarPointerPosition = mBarLength + mBarPointerHaloRadius;
     }
-    invalidate();
   }
 
-  private void setSV(float omni) {
-    mHSVColor[mBarType] = omni;
-  }
+  @Override
+  protected void onDraw(Canvas canvas) {
+    // Draw the bar.
+    canvas.drawRect(mBarRect, mBarPaint);
 
-  private int getDisplayColor(float[] color) {
-    return getDisplayColor(color, color[mBarType]);
-  }
-
-  private int getDisplayColor(float[] color, float omni) {
-    float[] col = new float[3];
-    System.arraycopy(color, 0, col, 0, 3);
-    col[mBarType] = omni;
-    return Color.HSVToColor(mAlpha, col);
-  }
-
-  private void setSVFromCoordinates(float coord) {
-    coord = coord - mBarPointerHaloRadius;
-    if (coord < 0) {
-      coord = 0;
-    } else if (coord > mBarLength) {
-      coord = mBarLength;
+    // Calculate the center of the pointer.
+    int cX, cY;
+    if (mBarIsHorizontal) {
+      cX = mBarPointerPosition;
+      cY = mBarPointerHaloRadius;
+    } else {
+      cX = mBarPointerHaloRadius;
+      cY = mBarPointerPosition;
     }
-    float omni = mPosToSVFactor * coord;
-    setSV(omni);
-  }
 
-  public void setColorPicker(ColorPicker picker) {
-    mPicker = picker;
+    // Draw the pointer halo.
+    canvas.drawCircle(cX, cY, mBarPointerHaloRadius, mBarPointerHaloPaint);
+    // Draw the pointer.
+    canvas.drawCircle(cX, cY, mBarPointerRadius, mBarPointerPaint);
   }
 
   @Override
@@ -419,16 +318,116 @@ public class SaturationValueBar extends View {
     Parcelable superState = savedState.getParcelable(STATE_PARENT);
     super.onRestoreInstanceState(superState);
 
-    initializeColor(savedState.getInt(STATE_ALPHA), savedState.getFloatArray(STATE_COLOR));
+    float[] floats = savedState.getFloatArray(STATE_COLOR);
+    if (floats == null) floats = new float[3];
+    initializeColor(savedState.getInt(STATE_ALPHA), floats);
+  }
+
+  @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    final int intrinsicSize = mPreferredBarLength + (mBarPointerHaloRadius * 2);
+
+    // Variable orientation
+    int measureSpec;
+    if (mBarIsHorizontal) {
+      measureSpec = widthMeasureSpec;
+    } else {
+      measureSpec = heightMeasureSpec;
+    }
+    int lengthMode = MeasureSpec.getMode(measureSpec);
+    int lengthSize = MeasureSpec.getSize(measureSpec);
+
+    int length;
+    if (lengthMode == MeasureSpec.EXACTLY) {
+      length = lengthSize;
+    } else if (lengthMode == MeasureSpec.AT_MOST) {
+      length = Math.min(intrinsicSize, lengthSize);
+    } else {
+      length = intrinsicSize;
+    }
+
+    int barPointerHaloRadiusx2 = mBarPointerHaloRadius * 2;
+    mBarLength = length - barPointerHaloRadiusx2;
+    if (!mBarIsHorizontal) {
+      setMeasuredDimension(barPointerHaloRadiusx2, (mBarLength + barPointerHaloRadiusx2));
+    } else {
+      setMeasuredDimension((mBarLength + barPointerHaloRadiusx2), barPointerHaloRadiusx2);
+    }
+  }
+
+  public void initializeColor(int alpha, float[] color) {
+    mAlpha = alpha;
+    mBarPointerPosition = Math.round(((mSVToPosFactor * color[mBarType])) + mBarPointerHaloRadius);
+    setColor(color, true);
+  }
+
+  private void setColor(float[] color, boolean initialize) {
+    int x1, y1;
+    if (mBarIsHorizontal) {
+      x1 = (mBarLength + mBarPointerHaloRadius);
+      y1 = mBarThickness;
+    } else {
+      x1 = mBarThickness;
+      y1 = (mBarLength + mBarPointerHaloRadius);
+    }
+    System.arraycopy(color, 0, mHSVColor, 0, 3);
+
+    shader =
+        new LinearGradient(
+            mBarPointerHaloRadius,
+            0,
+            x1,
+            y1,
+            new int[] {getDisplayColor(color, 0), getDisplayColor(color, 1)},
+            null,
+            Shader.TileMode.CLAMP);
+    mBarPaint.setShader(shader);
+
+    mBarPointerPaint.setColor(getDisplayColor(color));
+    if (!initialize) {
+      if (mPicker != null) {
+        mPicker.setColor(mAlpha, mHSVColor, mBarType);
+      }
+    }
+    invalidate();
+  }
+
+  private int getDisplayColor(float[] color) {
+    return getDisplayColor(color, color[mBarType]);
+  }
+
+  private int getDisplayColor(float[] color, float omni) {
+    float[] col = new float[3];
+    System.arraycopy(color, 0, col, 0, 3);
+    col[mBarType] = omni;
+    return Color.HSVToColor(mAlpha, col);
+  }
+
+  private void setColor(float[] color) {
+    setColor(color, false);
+  }
+
+  private void setSV(float omni) {
+    mHSVColor[mBarType] = omni;
+  }
+
+  private void setSVFromCoordinates(float coord) {
+    coord = coord - mBarPointerHaloRadius;
+    if (coord < 0) {
+      coord = 0;
+    } else if (coord > mBarLength) {
+      coord = mBarLength;
+    }
+    float omni = mPosToSVFactor * coord;
+    setSV(omni);
+  }
+
+  public void setColorPicker(ColorPicker picker) {
+    mPicker = picker;
   }
 
   private void logHSV(String source, float[] mHSVColor) {
     Log.d(TAG, source + ": " + mHSVColor[0] + "/" + mHSVColor[1] + "/" + mHSVColor[2]);
-  }
-
-  public interface OnOmniChangedListener {
-
-    void onOmniChanged(int omni);
   }
 
   public void setBarType(int type) {
@@ -455,5 +454,10 @@ public class SaturationValueBar extends View {
   public void setBarPointerHaloColor(int barPointerHaloColor) {
     this.mBarPointerHaloColor = barPointerHaloColor;
     mBarPointerHaloPaint.setColor(mBarPointerHaloColor);
+  }
+
+  public interface OnOmniChangedListener {
+
+    void onOmniChanged(int omni);
   }
 }

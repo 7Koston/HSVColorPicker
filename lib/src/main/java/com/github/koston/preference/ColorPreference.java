@@ -39,33 +39,6 @@ public class ColorPreference extends DialogPreference {
     init(context, null);
   }
 
-  public ColorPreference(Context context, AttributeSet attrs) {
-    super(context, attrs, R.attr.dialogPreferenceStyle);
-    init(context, attrs);
-  }
-
-  public ColorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-    init(context, attrs);
-  }
-
-  @Override
-  protected Object onGetDefaultValue(TypedArray a, int index) {
-    return a.getInt(index, 0);
-  }
-
-  @Override
-  public void onBindViewHolder(PreferenceViewHolder holder) {
-    ivIndicator = (ImageView) holder.findViewById(R.id.colorIndicator);
-    super.onBindViewHolder(holder);
-    setColor(mColor);
-  }
-
-  @Override
-  public int getDialogLayoutResource() {
-    return R.layout.dialog_color_picker;
-  }
-
   private void init(Context context, AttributeSet attrs) {
     Resources b = context.getResources();
     mDrawable = ResourcesCompat.getDrawable(b, R.drawable.circle, context.getTheme());
@@ -127,14 +100,26 @@ public class ColorPreference extends DialogPreference {
     setWidgetLayoutResource(R.layout.preference_indicator);
   }
 
-  public int getColor() {
-    return mColor;
+  public ColorPreference(Context context, AttributeSet attrs) {
+    super(context, attrs, R.attr.dialogPreferenceStyle);
+    init(context, attrs);
   }
 
-  public void setColor(int color) {
-    mColor = color;
-    setIndicatorColor();
-    persistInt(mColor);
+  public ColorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init(context, attrs);
+  }
+
+  @Override
+  protected Object onGetDefaultValue(TypedArray a, int index) {
+    return a.getInt(index, 0);
+  }
+
+  @Override
+  public void onBindViewHolder(PreferenceViewHolder holder) {
+    ivIndicator = (ImageView) holder.findViewById(R.id.colorIndicator);
+    super.onBindViewHolder(holder);
+    setColor(mColor);
   }
 
   private void setIndicatorColor() {
@@ -145,14 +130,29 @@ public class ColorPreference extends DialogPreference {
   }
 
   @Override
+  @SuppressWarnings("deprecation")
+  protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+    setColor(restorePersistedValue ? getPersistedInt(mColor) : (int) defaultValue);
+  }
+
+  @Override
+  public int getDialogLayoutResource() {
+    return R.layout.dialog_color_picker;
+  }
+
+  @Override
   protected void onClick() {
     getPreferenceManager().showDialog(this);
   }
 
-  @Override
-  @SuppressWarnings("deprecation")
-  protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-    setColor(restorePersistedValue ? getPersistedInt(mColor) : (int) defaultValue);
+  public int getColor() {
+    return mColor;
+  }
+
+  public void setColor(int color) {
+    mColor = color;
+    setIndicatorColor();
+    persistInt(mColor);
   }
 
   public int getColorWheelThickness() {

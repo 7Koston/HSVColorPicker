@@ -10,11 +10,12 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    SharedPreferences prefs =
-        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+        getApplicationContext());
     if (prefs.getBoolean("theme", false)) {
       getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-    } else {
+    }
+    else {
       getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
     AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);

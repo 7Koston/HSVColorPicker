@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     compileSdkVersion buildConfig.compileSdk
@@ -13,8 +13,8 @@ android {
         applicationId "com.pref.color.picker"
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
-        versionCode 13
-        versionName "1.1.3"
+        versionCode 14
+        versionName "1.1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -40,5 +40,5 @@ dependencies {
     implementation deps.androidx.preference
     implementation project(':lib')
 
-    implementation "com.google.android.material:material:1.3.0-alpha02"
+    implementation "com.google.android.material:material:1.5.0-beta01"
 }

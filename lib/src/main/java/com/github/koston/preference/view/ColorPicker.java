@@ -18,6 +18,7 @@ package com.github.koston.preference.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -31,6 +32,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import androidx.core.content.res.ResourcesCompat;
 import com.github.koston.preference.R;
 
 @SuppressWarnings("unused")
@@ -51,9 +53,7 @@ public class ColorPicker extends View {
   private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
   private static final int[] COLORS =
-      new int[] {
-        0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000
-      };
+      new int[]{0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000};
 
   private Paint mColorWheelPaint;
   private Paint mPointerHaloPaint;
@@ -71,8 +71,8 @@ public class ColorPicker extends View {
   private int mPreferredColorCenterRadius;
   private int mPreferredColorCenterHaloRadius;
 
-  private RectF mColorWheelRectangle = new RectF();
-  private RectF mCenterRectangle = new RectF();
+  private final RectF mColorWheelRectangle = new RectF();
+  private final RectF mCenterRectangle = new RectF();
 
   private boolean mUserIsMovingPointer = false;
   private boolean mShowCenterOldColor;
@@ -136,40 +136,28 @@ public class ColorPicker extends View {
   }
 
   private void init(AttributeSet attrs, int defStyle) {
-    final TypedArray a =
-        getContext().obtainStyledAttributes(attrs, R.styleable.ColorPicker, defStyle, 0);
+    final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ColorPicker,
+        defStyle, 0);
     final Resources r = getContext().getResources();
+    final Theme t = getContext().getTheme();
 
-    mColorWheelThickness =
-        a.getDimensionPixelSize(
-            R.styleable.ColorPicker_wheelThickness,
-            r.getDimensionPixelSize(R.dimen.defaultWheelThickness));
-    mColorWheelRadius =
-        a.getDimensionPixelSize(
-            R.styleable.ColorPicker_wheelRadius,
-            r.getDimensionPixelSize(R.dimen.defaultWheelRadius));
+    mColorWheelThickness = a.getDimensionPixelSize(R.styleable.ColorPicker_wheelThickness,
+        r.getDimensionPixelSize(R.dimen.defaultWheelThickness));
+    mColorWheelRadius = a.getDimensionPixelSize(R.styleable.ColorPicker_wheelRadius,
+        r.getDimensionPixelSize(R.dimen.defaultWheelRadius));
     mPreferredColorWheelRadius = mColorWheelRadius;
-    mColorCenterRadius =
-        a.getDimensionPixelSize(
-            R.styleable.ColorPicker_centerCircleRadius,
-            r.getDimensionPixelSize(R.dimen.defaultCenterRadius));
+    mColorCenterRadius = a.getDimensionPixelSize(R.styleable.ColorPicker_centerCircleRadius,
+        r.getDimensionPixelSize(R.dimen.defaultCenterRadius));
     mPreferredColorCenterRadius = mColorCenterRadius;
-    mColorCenterHaloRadius =
-        a.getDimensionPixelSize(
-            R.styleable.ColorPicker_centerCircleHaloRadius,
-            r.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
+    mColorCenterHaloRadius = a.getDimensionPixelSize(R.styleable.ColorPicker_centerCircleHaloRadius,
+        r.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
     mPreferredColorCenterHaloRadius = mColorCenterHaloRadius;
-    mColorPointerRadius =
-        a.getDimensionPixelSize(
-            R.styleable.ColorPicker_pointerRadius,
-            r.getDimensionPixelSize(R.dimen.defaultPointerRadius));
-    mColorPointerHaloRadius =
-        a.getDimensionPixelSize(
-            R.styleable.ColorPicker_pointerHaloRadius,
-            r.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
-    mColorPointerHaloColor =
-        a.getColor(
-            R.styleable.ColorPicker_pointerHaloColor, r.getColor(R.color.defaultPointerHaloColor));
+    mColorPointerRadius = a.getDimensionPixelSize(R.styleable.ColorPicker_pointerRadius,
+        r.getDimensionPixelSize(R.dimen.defaultPointerRadius));
+    mColorPointerHaloRadius = a.getDimensionPixelSize(R.styleable.ColorPicker_pointerHaloRadius,
+        r.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
+    mColorPointerHaloColor = a.getColor(R.styleable.ColorPicker_pointerHaloColor,
+        ResourcesCompat.getColor(r, R.color.defaultPointerHaloColor, t));
 
     a.recycle();
 
@@ -218,8 +206,8 @@ public class ColorPicker extends View {
     float[] pointerPosition = calculatePointerPosition(mAngle);
 
     // Draw the pointer's "halo"
-    canvas.drawCircle(
-        pointerPosition[0], pointerPosition[1], mColorPointerHaloRadius, mPointerHaloPaint);
+    canvas.drawCircle(pointerPosition[0], pointerPosition[1], mColorPointerHaloRadius,
+        mPointerHaloPaint);
 
     // Draw the pointer (the currently selected color) slightly smaller on
     // top.
@@ -236,7 +224,8 @@ public class ColorPicker extends View {
 
         // Draw the new selected color in the center.
         canvas.drawArc(mCenterRectangle, 270, 180, true, mCenterNewPaint);
-      } else {
+      }
+      else {
         // Draw the new selected color in the center.
         canvas.drawArc(mCenterRectangle, 0, 360, true, mCenterNewPaint);
       }
@@ -257,17 +246,21 @@ public class ColorPicker extends View {
 
     if (widthMode == MeasureSpec.EXACTLY) {
       width = widthSize;
-    } else if (widthMode == MeasureSpec.AT_MOST) {
+    }
+    else if (widthMode == MeasureSpec.AT_MOST) {
       width = Math.min(intrinsicSize, widthSize);
-    } else {
+    }
+    else {
       width = intrinsicSize;
     }
 
     if (heightMode == MeasureSpec.EXACTLY) {
       height = heightSize;
-    } else if (heightMode == MeasureSpec.AT_MOST) {
+    }
+    else if (heightMode == MeasureSpec.AT_MOST) {
       height = Math.min(intrinsicSize, heightSize);
-    } else {
+    }
+    else {
       height = intrinsicSize;
     }
 
@@ -277,19 +270,16 @@ public class ColorPicker extends View {
 
     // fill the rectangle instances.
     mColorWheelRadius = min / 2 - mColorWheelThickness - mColorPointerHaloRadius;
-    mColorWheelRectangle.set(
-        -mColorWheelRadius, -mColorWheelRadius, mColorWheelRadius, mColorWheelRadius);
+    mColorWheelRectangle.set(-mColorWheelRadius, -mColorWheelRadius, mColorWheelRadius,
+        mColorWheelRadius);
 
-    mColorCenterRadius =
-        (int)
-            ((float) mPreferredColorCenterRadius
-                * ((float) mColorWheelRadius / (float) mPreferredColorWheelRadius));
+    mColorCenterRadius = (int) ((float) mPreferredColorCenterRadius * ((float) mColorWheelRadius
+        / (float) mPreferredColorWheelRadius));
     mColorCenterHaloRadius =
-        (int)
-            ((float) mPreferredColorCenterHaloRadius
-                * ((float) mColorWheelRadius / (float) mPreferredColorWheelRadius));
-    mCenterRectangle.set(
-        -mColorCenterRadius, -mColorCenterRadius, mColorCenterRadius, mColorCenterRadius);
+        (int) ((float) mPreferredColorCenterHaloRadius * ((float) mColorWheelRadius
+            / (float) mPreferredColorWheelRadius));
+    mCenterRectangle.set(-mColorCenterRadius, -mColorCenterRadius, mColorCenterRadius,
+        mColorCenterRadius);
   }
 
   private int ave(int s, int d, float p) {
@@ -301,7 +291,7 @@ public class ColorPicker extends View {
     float[] hue = {0, 0, 0};
     Color.colorToHSV(color, hsv);
     Color.colorToHSV(colorForHue, hue);
-    return Color.HSVToColor(Color.alpha(color), new float[] {hue[0], hsv[1], hsv[2]});
+    return Color.HSVToColor(Color.alpha(color), new float[]{hue[0], hsv[1], hsv[2]});
   }
 
   private int setHueFromAngleRGB(float angle, int prevColor) {
@@ -332,7 +322,7 @@ public class ColorPicker extends View {
   }
 
   private void setHueFromAngleHSV(float angle, float[] color) {
-    float degrees = -(float) Math.toDegrees((double) angle);
+    float degrees = -(float) Math.toDegrees(angle);
     float hue = degrees;
     if (degrees < 0) {
       hue = degrees + 360;
@@ -395,9 +385,8 @@ public class ColorPicker extends View {
       case MotionEvent.ACTION_DOWN:
         // Check whether the user pressed on the pointer.
         float[] pointerPosition = calculatePointerPosition(mAngle);
-        if (x >= (pointerPosition[0] - mColorPointerHaloRadius)
-            && x <= (pointerPosition[0] + mColorPointerHaloRadius)
-            && y >= (pointerPosition[1] - mColorPointerHaloRadius)
+        if (x >= (pointerPosition[0] - mColorPointerHaloRadius) && x <= (pointerPosition[0]
+            + mColorPointerHaloRadius) && y >= (pointerPosition[1] - mColorPointerHaloRadius)
             && y <= (pointerPosition[1] + mColorPointerHaloRadius)) {
           mSlopX = x - pointerPosition[0];
           mSlopY = y - pointerPosition[1];
@@ -405,11 +394,8 @@ public class ColorPicker extends View {
           invalidate();
         }
         // Check whether the user pressed on the center.
-        else if (x >= -mColorCenterRadius
-            && x <= mColorCenterRadius
-            && y >= -mColorCenterRadius
-            && y <= mColorCenterRadius
-            && mShowCenterOldColor) {
+        else if (x >= -mColorCenterRadius && x <= mColorCenterRadius && y >= -mColorCenterRadius
+            && y <= mColorCenterRadius && mShowCenterOldColor) {
           mCenterHaloPaint.setAlpha(0x50);
           setColor(mAlpha, getOldCenterColorHSV(), TYPE_PICKER);
           invalidate();
@@ -471,7 +457,7 @@ public class ColorPicker extends View {
     float x = (float) (mColorWheelRadius * Math.cos(angle));
     float y = (float) (mColorWheelRadius * Math.sin(angle));
 
-    return new float[] {x, y};
+    return new float[]{x, y};
   }
 
   public void addOpacityBar(OpacityBar bar) {

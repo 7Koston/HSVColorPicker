@@ -16,9 +16,12 @@ public abstract class ColorPreferenceFragmentCompat extends PreferenceFragmentCo
       dialogFragment = ColorPickerDialog.newInstance(preference.getKey());
     }
     if (dialogFragment != null) {
+      String key = dialogFragment.getClass().getName();
+      // Preference library still uses this approach even thought it is deprecated
       dialogFragment.setTargetFragment(this, 0);
-      dialogFragment.show(manager, ColorPickerDialog.class.getName());
-    } else {
+      dialogFragment.show(manager, key);
+    }
+    else {
       super.onDisplayPreferenceDialog(preference);
     }
   }

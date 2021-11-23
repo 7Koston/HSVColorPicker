@@ -23,33 +23,21 @@ public class DemoPreferenceFragment extends ColorPreferenceFragmentCompat {
 
     SwitchPreference themeMode = findPreference("theme");
     if (themeMode != null) {
-      themeMode.setOnPreferenceChangeListener(
-          (preference, newValue) -> {
-            new MaterialAlertDialogBuilder(mContext, R.style.AppTheme_AlertDialog)
-                .setMessage("Restart?")
-                .setPositiveButton(
-                    android.R.string.yes,
-                    (dialog, which) -> {
-                      Intent intent =
-                          mContext
-                              .getApplicationContext()
-                              .getPackageManager()
-                              .getLaunchIntentForPackage(
-                                  mContext.getApplicationContext().getPackageName());
-                      if (intent != null) {
-                        startActivity(
-                            intent.addFlags(
-                                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                      }
-                    })
-                .setNegativeButton(
-                    android.R.string.cancel,
-                    (dialog, which) -> themeMode.setChecked(!themeMode.isChecked()))
-                .setOnCancelListener(d -> themeMode.setChecked(!themeMode.isChecked()))
-                .setCustomTitle(null)
-                .show();
-            return true;
-          });
+      themeMode.setOnPreferenceChangeListener((preference, newValue) -> {
+        new MaterialAlertDialogBuilder(mContext, R.style.AppTheme_AlertDialog).setMessage(
+            "Restart?").setPositiveButton(android.R.string.ok, (dialog, which) -> {
+          Intent intent =
+              mContext.getApplicationContext().getPackageManager().getLaunchIntentForPackage(
+                  mContext.getApplicationContext().getPackageName());
+          if (intent != null) {
+            startActivity(
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+          }
+        }).setNegativeButton(android.R.string.cancel,
+            (dialog, which) -> themeMode.setChecked(!themeMode.isChecked())).setOnCancelListener(
+            d -> themeMode.setChecked(!themeMode.isChecked())).setCustomTitle(null).show();
+        return true;
+      });
     }
   }
 }

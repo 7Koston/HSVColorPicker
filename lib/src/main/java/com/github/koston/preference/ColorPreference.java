@@ -2,6 +2,7 @@ package com.github.koston.preference;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -40,59 +41,41 @@ public class ColorPreference extends DialogPreference {
   }
 
   private void init(Context context, AttributeSet attrs) {
-    Resources b = context.getResources();
-    mDrawable = ResourcesCompat.getDrawable(b, R.drawable.circle, context.getTheme());
+    Resources r = context.getResources();
+    Theme t = getContext().getTheme();
+    mDrawable = ResourcesCompat.getDrawable(r, R.drawable.circle, t);
 
     if (attrs != null) {
       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorPreference);
 
       asIndicator = a.getBoolean(R.styleable.ColorPreference_indicatorColorPreview, true);
 
-      colorWheelThickness =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_hueWheelThickness,
-              b.getDimensionPixelSize(R.dimen.defaultWheelThickness));
-      colorWheelRadius =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_hueWheelRadius,
-              b.getDimensionPixelSize(R.dimen.defaultWheelRadius));
-      colorCenterRadius =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_hueCenterCircleRadius,
-              b.getDimensionPixelSize(R.dimen.defaultCenterRadius));
-      colorCenterHaloRadius =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_hueCenterCircleHaloRadius,
-              b.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
-      colorPointerRadius =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_huePointerRadius,
-              b.getDimensionPixelSize(R.dimen.defaultPointerRadius));
-      colorPointerHaloRadius =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_huePointerHaloRadius,
-              b.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
+      colorWheelThickness = a.getDimensionPixelSize(R.styleable.ColorPreference_hueWheelThickness,
+          r.getDimensionPixelSize(R.dimen.defaultWheelThickness));
+      colorWheelRadius = a.getDimensionPixelSize(R.styleable.ColorPreference_hueWheelRadius,
+          r.getDimensionPixelSize(R.dimen.defaultWheelRadius));
+      colorCenterRadius = a.getDimensionPixelSize(R.styleable.ColorPreference_hueCenterCircleRadius,
+          r.getDimensionPixelSize(R.dimen.defaultCenterRadius));
+      colorCenterHaloRadius = a.getDimensionPixelSize(
+          R.styleable.ColorPreference_hueCenterCircleHaloRadius,
+          r.getDimensionPixelSize(R.dimen.defaultCenterHaloRadius));
+      colorPointerRadius = a.getDimensionPixelSize(R.styleable.ColorPreference_huePointerRadius,
+          r.getDimensionPixelSize(R.dimen.defaultPointerRadius));
+      colorPointerHaloRadius = a.getDimensionPixelSize(
+          R.styleable.ColorPreference_huePointerHaloRadius,
+          r.getDimensionPixelSize(R.dimen.defaultPointerHaloRadius));
 
-      barThickness =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barsThickness,
-              b.getDimensionPixelSize(R.dimen.defaultBarThickness));
-      barLength =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barsLength,
-              b.getDimensionPixelSize(R.dimen.defaultBarLength));
-      barPointerRadius =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barsPointerRadius,
-              b.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
-      barPointerHaloRadius =
-          a.getDimensionPixelSize(
-              R.styleable.ColorPreference_barsPointerHaloRadius,
-              b.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
-      pointersHaloColor =
-          a.getColor(
-              R.styleable.ColorPreference_pointersHaloColor,
-              b.getColor(R.color.defaultPointerHaloColor));
+      barThickness = a.getDimensionPixelSize(R.styleable.ColorPreference_barsThickness,
+          r.getDimensionPixelSize(R.dimen.defaultBarThickness));
+      barLength = a.getDimensionPixelSize(R.styleable.ColorPreference_barsLength,
+          r.getDimensionPixelSize(R.dimen.defaultBarLength));
+      barPointerRadius = a.getDimensionPixelSize(R.styleable.ColorPreference_barsPointerRadius,
+          r.getDimensionPixelSize(R.dimen.defaultBarPointerRadius));
+      barPointerHaloRadius = a.getDimensionPixelSize(
+          R.styleable.ColorPreference_barsPointerHaloRadius,
+          r.getDimensionPixelSize(R.dimen.defaultBarPointerHaloRadius));
+      pointersHaloColor = a.getColor(R.styleable.ColorPreference_pointersHaloColor,
+          ResourcesCompat.getColor(r, R.color.defaultPointerHaloColor, t));
 
       a.recycle();
     }

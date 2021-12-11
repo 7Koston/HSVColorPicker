@@ -132,7 +132,8 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat
   public void afterTextChanged(Editable s) {
     if (hexChanging) {
       if (s.length() == 8) {
-        picker.setColor((int) Long.parseLong(s.toString(), 16));
+        String _long = s.toString().replaceAll("[^a-fA-F0-9]", "F");
+        picker.setColor((int) Long.parseLong(_long, 16));
         hex.onEditorAction(EditorInfo.IME_ACTION_DONE);
         hex.clearFocus();
       }

@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
-        versionCode 14
-        versionName "1.1.4"
+        versionCode 15
+        versionName "1.1.5"
         vectorDrawables.useSupportLibrary = true
     }
 }
@@ -33,7 +33,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.7Koston'
                 artifactId = 'HSVColorPicker'
-                version = '1.1.4'
+                version = '1.1.5'
             }
         }
     }
